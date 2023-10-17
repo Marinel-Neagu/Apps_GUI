@@ -24,11 +24,11 @@ NUMBER_POSITIONS = {
 		'9': {'row': 3, 'column': 2, 'span': 1},
 		}
 MATH_POSITIONS = {
-		'=': {'row': 6, 'column': 3, 'character': '='},
-		'+': {'row': 5, 'column': 3, 'character': '+', 'image_path': None},
-		'-': {'row': 5, 'column': 3, 'character': '-', 'image_path': None},
-		'X': {'row': 5, 'column': 3, 'character': 'X', 'image_path': None},
-		'/': {'row': 5, 'column': 3, 'character': '/', 'image_path': None},
+		'=': {'row': 6, 'column': 3, 'text': '=', 'span': 1},
+		'+': {'row': 5, 'column': 3, 'text': '+', 'span': 1},
+		'-': {'row': 5, 'column': 3, 'text': '-', 'span': 1},
+		'X': {'row': 5, 'column': 3, 'text': 'X', 'span': 1},
+		'/': {'row': 5, 'column': 3, 'text': '/', 'span': 1},
 		}
 MATH_OPERATORS = {
 		'clear'  : {'row': 2, 'column': 0, 'span': 1, 'text': 'AC'},
