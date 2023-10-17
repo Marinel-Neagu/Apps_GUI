@@ -3,11 +3,19 @@ from settings import *
 
 
 class Button(ttk.Button):
-	def __init__(self, parent, text, style, row, col, span):
+	def __init__(self, parent, text, style, func, row, column, span):
 		super().__init__(
 				master = parent,
 				text = text,
-				style = style,
-				
+				bootstyle = style,
+				command = func,
 				)
-		self.grid(row = row, column = col, rowspan = span, padx = GAP_SIZE, pady = GAP_SIZE)
+		
+		self.grid(
+				row = row,
+				column = column,
+				columnspan = span,
+				sticky = 'news',
+				padx = GAP_SIZE,
+				pady = GAP_SIZE
+				)
