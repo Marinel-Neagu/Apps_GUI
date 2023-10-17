@@ -24,11 +24,16 @@ NUMBER_POSITIONS = {
 		'9': {'row': 3, 'column': 2, 'span': 1},
 		}
 MATH_POSITIONS = {
-		'=': {'row': 6, 'column': 3, 'character': '=', 'image_path': None},
+		'=': {'row': 6, 'column': 3, 'character': '='},
 		'+': {'row': 5, 'column': 3, 'character': '+', 'image_path': None},
 		'-': {'row': 5, 'column': 3, 'character': '-', 'image_path': None},
 		'X': {'row': 5, 'column': 3, 'character': 'X', 'image_path': None},
 		'/': {'row': 5, 'column': 3, 'character': '/', 'image_path': None},
+		}
+MATH_OPERATORS = {
+		'clear'  : {'row': 5, 'column': 0, 'span': 1, 'text': 'AC'},
+		'invert' : {'row': 5, 'column': 1, 'span': 1, 'text': '+/-'},
+		'percent': {'row': 5, 'column': 2, 'span': 1, 'text': '%'},
 		}
 
 GAP_SIZE = 0.5

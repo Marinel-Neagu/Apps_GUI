@@ -7,7 +7,7 @@ class Button(ttk.Button):
 		super().__init__(
 				master = parent,
 				text = text,
-				bootstyle = style,
+				style = style,
 				command = func,
 				)
 		

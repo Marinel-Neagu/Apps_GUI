@@ -5,7 +5,7 @@ from button import Button
 
 class CalculatorApp(ttk.Window):
 	def __init__(self):
-		super().__init__()
+		super().__init__(themename = 'cyborg')
 		self.bind('<Alt-s>', lambda e: self.destroy())
 		# setup
 		self.title("")
@@ -23,7 +23,12 @@ class CalculatorApp(ttk.Window):
 		# font and style
 		ttk.Style().configure('Result.TLabel', font = (FONT, OUTPUT_FONT_SIZE))
 		ttk.Style().configure('Formula.TLabel', font = (FONT, NORMAL_FONT_SIZE))
-		ttk.Style().configure('Number.TButton', font = (FONT, NORMAL_FONT_SIZE), background = '#3e32a8')
+		ttk.Style().configure(
+				'Number.TButton',
+				font = (FONT, NORMAL_FONT_SIZE),
+				background = '#3e32a8',
+				borderwidth = 0,
+				)
 		
 		# set data
 		self.formula_string = ttk.StringVar(value = 'Formula')
@@ -51,18 +56,20 @@ class CalculatorApp(ttk.Window):
 		
 		self.mainloop()
 	
-	def create_widgets(self):
+	def num_buttons(self):
 		for number, data in NUMBER_POSITIONS.items():
 			Button(
 					parent = self,
 					text = number,
-					style = 'danger',
-					
+					style = 'Number.TButton',
 					row = data['row'],
 					column = data['column'],
 					span = data['span'],
 					func = None,
 					)
+	
+	def operator_buttons(self):
+		for
 
 
 class OutputLabel(ttk.Label):
