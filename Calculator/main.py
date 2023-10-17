@@ -99,6 +99,9 @@ class CalculatorApp(ttk.Window):
 	# 	math logic
 	def num_press(self, number):
 		self.result_string.set(number)
+	
+	def math_press(self, number):
+		self.result_string.set(number)
 
 
 CalculatorApp()
