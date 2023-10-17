@@ -1,6 +1,6 @@
 import ttkbootstrap as ttk
 from settings import *
-from button import Button
+from button import *
 
 
 class CalculatorApp(ttk.Window):
@@ -24,25 +24,37 @@ class CalculatorApp(ttk.Window):
 		ttk.Style().configure('Result.TLabel', font = (FONT, OUTPUT_FONT_SIZE))
 		ttk.Style().configure('Formula.TLabel', font = (FONT, NORMAL_FONT_SIZE))
 		ttk.Style().configure(
-				'Number.TButton',
+				'TButton',
 				font = (FONT, NORMAL_FONT_SIZE),
 				background = '#3e32a8',
 				borderwidth = 0,
 				)
 		
 		# set data
-		self.formula_string = ttk.StringVar(value = 'Formula')
-		self.result_string = ttk.StringVar(value = 'Result')
+		self.formula_string = ttk.StringVar(value = '')
+		self.result_string = ttk.StringVar(value = '0')
+		self.display_nums = []
+		self.full_operation = []
 		
 		# set widgets label
-		self.formula_label = OutputLabel(
+		self.create_labels()
+		
+		# set widgets buttons and operators
+		self.num_buttons()
+		self.math_symbols()
+		self.math_operators()
+		
+		self.mainloop()
+	
+	def create_labels(self):
+		OutputLabel(
 				parent = self,
 				row = 0,
 				anchor = 'SE',
 				style = 'Main.TLabel',
 				string_var = self.formula_string
 				)
-		self.result_label = OutputLabel(
+		OutputLabel(
 				parent = self,
 				row = 1,
 				anchor = 'E',
@@ -50,59 +62,43 @@ class CalculatorApp(ttk.Window):
 				string_var = self.result_string
 				
 				)
-		
-		# set widgets buttons and operators
-		self.num_buttons()
-		self.operator_buttons()
-		self.math_buttons()
-		
-		self.mainloop()
 	
 	def num_buttons(self):
-		for number, data in MATH_OPERATORS.items():
+		for number, data in NUMBER_POSITIONS.items():
 			Button(
 					parent = self,
 					text = number,
-					style = 'Number.TButton',
+					func = self.num_press,
 					row = data['row'],
 					column = data['column'],
 					span = data['span'],
-					func = None,
 					)
 	
-	def operator_buttons(self):
+	def math_symbols(self):
+		for data, symbol in MATH_POSITIONS.items():
+			Button(
+					parent = self,
+					text = symbol['text'],
+					row = symbol['row'],
+					column = symbol['column'],
+					span = symbol['span'],
+					func = None
+					)
+	
+	def math_operators(self):
 		for data, operator in MATH_OPERATORS.items():
 			Button(
 					parent = self,
 					text = operator['text'],
-					style = 'Number.TButton',
-					row = operator['row'],
-					column = operator['column'],
-					span = operator['span'],
-					func = None
-					)
-	
-	def math_buttons(self):
-		for symbol, operator in MATH_OPERATORS:
-			Button(
-					parent = self,
-					text = operator['text'],
-					style = 'Number.TButton',
 					func = None,
 					row = operator['row'],
 					column = operator['column'],
 					span = operator['span'],
 					)
-
-
-class OutputLabel(ttk.Label):
-	def __init__(self, parent, style, string_var, row, anchor):
-		super().__init__(
-				master = parent,
-				style = style,
-				textvariable = string_var,
-				)
-		self.grid(column = 0, row = row, columnspan = 4, sticky = anchor)
+	
+	# 	math logic
+	def num_press(self, number):
+		self.result_string.set(number)
 
 
 CalculatorApp()

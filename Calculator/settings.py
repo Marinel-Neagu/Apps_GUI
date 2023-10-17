@@ -1,6 +1,6 @@
 # size and layout app
 
-APP_SIZE = (400, 700)
+APP_SIZE = (600, 800)
 MAIN_ROW = 7
 MAIN_COLUMN = 4
 
@@ -26,9 +26,9 @@ NUMBER_POSITIONS = {
 MATH_POSITIONS = {
 		'=': {'row': 6, 'column': 3, 'text': '=', 'span': 1},
 		'+': {'row': 5, 'column': 3, 'text': '+', 'span': 1},
-		'-': {'row': 5, 'column': 3, 'text': '-', 'span': 1},
-		'X': {'row': 5, 'column': 3, 'text': 'X', 'span': 1},
-		'/': {'row': 5, 'column': 3, 'text': '/', 'span': 1},
+		'-': {'row': 4, 'column': 3, 'text': '-', 'span': 1},
+		'X': {'row': 3, 'column': 3, 'text': 'X', 'span': 1},
+		'/': {'row': 2, 'column': 3, 'text': '/', 'span': 1},
 		}
 MATH_OPERATORS = {
 		'clear'  : {'row': 2, 'column': 0, 'span': 1, 'text': 'AC'},
