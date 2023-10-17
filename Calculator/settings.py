@@ -31,9 +31,9 @@ MATH_POSITIONS = {
 		'/': {'row': 5, 'column': 3, 'character': '/', 'image_path': None},
 		}
 MATH_OPERATORS = {
-		'clear'  : {'row': 5, 'column': 0, 'span': 1, 'text': 'AC'},
-		'invert' : {'row': 5, 'column': 1, 'span': 1, 'text': '+/-'},
-		'percent': {'row': 5, 'column': 2, 'span': 1, 'text': '%'},
+		'clear'  : {'row': 2, 'column': 0, 'span': 1, 'text': 'AC'},
+		'invert' : {'row': 2, 'column': 1, 'span': 1, 'text': '+/-'},
+		'percent': {'row': 2, 'column': 2, 'span': 1, 'text': '%'},
 		}
 
 GAP_SIZE = 0.5

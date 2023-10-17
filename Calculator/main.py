@@ -52,7 +52,8 @@ class CalculatorApp(ttk.Window):
 				)
 		
 		# set widgets buttons and operators
-		self.create_widgets()
+		self.num_buttons()
+		self.operator_buttons()
 		
 		self.mainloop()
 	
@@ -69,7 +70,16 @@ class CalculatorApp(ttk.Window):
 					)
 	
 	def operator_buttons(self):
-		for
+		for data, operator in MATH_OPERATORS.items():
+			Button(
+					parent = self,
+					text = operator['text'],
+					style = 'Number.TButton',
+					row = operator['row'],
+					column = operator['column'],
+					span = operator['span'],
+					func = None
+					)
 
 
 class OutputLabel(ttk.Label):
