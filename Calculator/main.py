@@ -84,7 +84,7 @@ class CalculatorApp(ttk.Window):
 	
 	def num_buttons(self):
 		for number, data in NUMBER_POSITIONS.items():
-			Button(
+			NumberButtons(
 					parent = self,
 					text = number,
 					func = self.num_press,
@@ -109,7 +109,7 @@ class CalculatorApp(ttk.Window):
 			Button(
 					parent = self,
 					text = operator['text'],
-					func =None ,
+					func = self.clear,
 					row = operator['row'],
 					column = operator['column'],
 					span = operator['span'],
