@@ -19,13 +19,32 @@ class Button(ttk.Button):
 				text = text,
 				command = lambda: func(text)
 				)
+		self.grid(
+				row = row,
+				column = column,
+				columnspan = span,
+				sticky = 'news',
+				padx = GAP_SIZE,  # is a problem on debian with padx and pady
+				pady = GAP_SIZE
+				
+				)
+
+
+class NumberButtons(Button):
+	def __init__(self, parent, text, func, row, column, span):
+		super().__init__(
+				parent = parent,
+				text = text,
+				func = func,
+				span = span
+				)
 		
 		self.grid(
 				row = row,
 				column = column,
 				columnspan = span,
 				sticky = 'news',
-				# padx = GAP_SIZE,# is a problem on debian with padx and pady
-				# pady = GAP_SIZE
+				padx = GAP_SIZE,  # is a problem on debian with padx and pady
+				pady = GAP_SIZE
 				
 				)
