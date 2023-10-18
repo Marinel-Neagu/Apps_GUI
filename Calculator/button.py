@@ -24,8 +24,8 @@ class Button(ttk.Button):
 				column = column,
 				columnspan = span,
 				sticky = 'news',
-				padx = GAP_SIZE,  # is a problem on debian with padx and pady
-				pady = GAP_SIZE
+				# padx = GAP_SIZE,  # is a problem on debian with padx and pady
+				# pady = GAP_SIZE
 				
 				)
 

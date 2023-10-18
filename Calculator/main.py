@@ -105,27 +105,50 @@ class CalculatorApp(ttk.Window):
 					)
 	
 	def math_operators(self):
-		for data, operator in MATH_OPERATORS.items():
-			Button(
-					parent = self,
-					text = operator['text'],
-					func = self.clear,
-					row = operator['row'],
-					column = operator['column'],
-					span = operator['span'],
-					)
+		Button(
+				parent = self,
+				text = MATH_OPERATORS['clear']['text'],
+				func = self.clear,
+				row = MATH_OPERATORS['clear']['row'],
+				column = MATH_OPERATORS['clear']['column'],
+				span = MATH_OPERATORS['clear']['span'],
+				)
+		Button(
+				parent = self,
+				text = MATH_OPERATORS['invert']['text'],
+				func = self.invert,
+				row = MATH_OPERATORS['invert']['row'],
+				column = MATH_OPERATORS['invert']['column'],
+				span = MATH_OPERATORS['invert']['span'],
+				)
+		
+		Button(
+				parent = self,
+				text = MATH_OPERATORS['percent']['text'],
+				func = self.percent,
+				row = MATH_OPERATORS['percent']['row'],
+				column = MATH_OPERATORS['percent']['column'],
+				span = MATH_OPERATORS['percent']['span'],
+				)
 	
 	# 	math logic
 	def num_press(self, number):
 		self.display_nums.append(number)
 		full_operation = ''.join(self.display_nums)
 		self.result_string.set(full_operation)
+		print('press' + number)
+	
+	def invert(self, number):
+	
 	
 	def clear(self):
 		self.result_string.set('0')
 		self.formula_string.set('')
 		self.display_nums.clear()
 		self.full_operation.clear()
+	
+	def percent(self):
+		print('haha')
 
 
 CalculatorApp()
