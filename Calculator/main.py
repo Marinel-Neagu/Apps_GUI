@@ -1,5 +1,5 @@
 from settings import *
-from button import *
+from button import Button, OutputLabel, NumberButtons
 
 try:
 	from ctypes import windll, byref, sizeof, c_int
