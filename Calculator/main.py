@@ -14,7 +14,7 @@ except:
 
 class CalculatorApp(ttk.Window):
 	def __init__(self):
-		super().__init__()
+		super().__init__(themename = 'superhero')
 		self.bind('<Alt-s>', lambda e: self.destroy())
 		# setup
 		self.title("")
@@ -36,10 +36,23 @@ class CalculatorApp(ttk.Window):
 		ttk.Style().configure('Result.TLabel', font = (FONT, OUTPUT_FONT_SIZE))
 		ttk.Style().configure('Formula.TLabel', font = (FONT, NORMAL_FONT_SIZE))
 		ttk.Style().configure(
-				'TButton',
+				'Number.TButton',
 				font = (FONT, NORMAL_FONT_SIZE),
-				background = '#3e32a8',
-				borderwidth = 0,
+				borderwidth = 5,
+				bordercolor = 'black',
+				)
+		ttk.Style().configure(
+				'Operators.TButton',
+				font = (FONT, NORMAL_FONT_SIZE),
+				borderwidth = 5,
+				bordercolor = 'black',
+				
+				)
+		ttk.Style().configure(
+				'Symbols.TButton',
+				font = (FONT, NORMAL_FONT_SIZE),
+				background = 'red'
+				
 				)
 		
 		# set data
@@ -91,6 +104,7 @@ class CalculatorApp(ttk.Window):
 			NumberButtons(
 					parent = self,
 					text = number,
+					style = 'Number.TButton',
 					func = self.num_press,
 					row = data['row'],
 					column = data['column'],
@@ -102,6 +116,7 @@ class CalculatorApp(ttk.Window):
 			NumberButtons(
 					parent = self,
 					text = symbol['text'],
+					style = 'Symbols.TButton',
 					row = symbol['row'],
 					column = symbol['column'],
 					span = symbol['span'],
@@ -112,14 +127,17 @@ class CalculatorApp(ttk.Window):
 		Button(
 				parent = self,
 				text = MATH_OPERATORS['clear']['text'],
+				style = 'Operators.TButton',
 				func = self.clear,
 				row = MATH_OPERATORS['clear']['row'],
 				column = MATH_OPERATORS['clear']['column'],
 				span = MATH_OPERATORS['clear']['span'],
+				
 				)
 		Button(
 				parent = self,
 				text = MATH_OPERATORS['invert']['text'],
+				style = 'Operators.TButton',
 				func = self.invert,
 				row = MATH_OPERATORS['invert']['row'],
 				column = MATH_OPERATORS['invert']['column'],
@@ -129,6 +147,7 @@ class CalculatorApp(ttk.Window):
 		Button(
 				parent = self,
 				text = MATH_OPERATORS['percent']['text'],
+				style = 'Operators.TButton',
 				func = self.percent,
 				row = MATH_OPERATORS['percent']['row'],
 				column = MATH_OPERATORS['percent']['column'],
@@ -151,36 +170,51 @@ class CalculatorApp(ttk.Window):
 			self.result_string.set(''.join(self.display_nums))
 	
 	def percent(self):
-		current_number = float(''.join(self.display_nums))
-		percentage = current_number / 100
-		self.display_nums = list(str(percentage))
-		self.result_string.set(''.join(self.display_nums))
+		current_number = ''.join(self.display_nums)
+		if current_number != '':
+			percentage = float(current_number) / 100
+			self.display_nums = list(str(percentage))
+			self.result_string.set(''.join(self.display_nums))
 	
 	def clear(self):
+		
 		self.result_string.set('0')
+		
 		self.formula_string.set('')
 		self.display_nums.clear()
 		self.full_operation.clear()
 	
 	def math_press(self, symbol):
-		# self.formula_string = ttk.StringVar(value = '')
-		# self.result_string = ttk.StringVar(value = '0')
-		# self.display_nums = []
-		# self.full_operation = []
-		
 		current_number = ''.join(self.display_nums)
-		if current_number:
-			self.full_operation.append(current_number)
-			if symbol != '=':
-				self.full_operation.append(symbol)
-				self.display_nums.clear()
-				self.result_string.set('0')
-				self.formula_string.set(''.join(self.full_operation))
-			else:
-				formula = ''.join(self.full_operation)
-				result = eval(formula)
-				self.result_string.set(''.join(str(result)))
-				self.full_operation.clear()
+		try:
+			if current_number:
+				self.full_operation.append(current_number)
+				if symbol != '=':
+					self.full_operation.append(symbol)
+					self.display_nums.clear()
+					self.result_string.set('')
+					self.formula_string.set(''.join(self.full_operation))
+				else:
+					formula = ' '.join(self.full_operation)
+					result = eval(formula)
+					if isinstance(result, float):
+						if result.is_integer():
+							result = int(result)
+						else:
+							result = round(result, 5)
+					
+					self.full_operation.clear()
+					self.display_nums = list(str(result))
+					
+					self.result_string.set(result)
+					self.formula_string.set(formula)
+		
+		except ZeroDivisionError:
+			self.result_string.set('Invalid!')
+			self.display_nums.clear()
+			
+			self.formula_string.set('')
+			self.full_operation.clear()
 
 
 CalculatorApp()

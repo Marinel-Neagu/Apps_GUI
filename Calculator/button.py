@@ -18,10 +18,11 @@ class OutputLabel(ttk.Label):
 
 
 class Button(ttk.Button):
-	def __init__(self, parent, text, func, row, column, span):
+	def __init__(self, parent, text, func, row, column, span, style):
 		super().__init__(
 				master = parent,
 				text = text,
+				bootstyle = style,
 				command = func
 				)
 		self.grid(
@@ -29,17 +30,18 @@ class Button(ttk.Button):
 				column = column,
 				columnspan = span,
 				sticky = 'news',
-				padx = GAP_SIZE,  # is a problem on debian with padx and pady
-				pady = GAP_SIZE
+				# padx = GAP_SIZE,  # is a problem on debian with padx and pady
+				# pady = GAP_SIZE
 				
 				)
 
 
 class NumberButtons(Button):
-	def __init__(self, parent, text, func, row, column, span):
+	def __init__(self, parent, text, style, func, row, column, span):
 		super().__init__(
 				parent = parent,
 				text = text,
+				bootstyle = style,
 				func = lambda: func(text),
 				span = span,
 				row = row,

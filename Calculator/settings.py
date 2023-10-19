@@ -27,7 +27,7 @@ MATH_POSITIONS = {
 		'=': {'row': 6, 'column': 3, 'text': '=', 'span': 1},
 		'+': {'row': 5, 'column': 3, 'text': '+', 'span': 1},
 		'-': {'row': 4, 'column': 3, 'text': '-', 'span': 1},
-		'X': {'row': 3, 'column': 3, 'text': 'X', 'span': 1},
+		'X': {'row': 3, 'column': 3, 'text': '*', 'span': 1},
 		'/': {'row': 2, 'column': 3, 'text': '/', 'span': 1},
 		}
 MATH_OPERATORS = {
