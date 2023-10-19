@@ -140,9 +140,12 @@ class CalculatorApp(ttk.Window):
 	def invert(self):
 		current_number = ''.join(self.display_nums)
 		if float(current_number) > 0:
-			print('is working')
-			print(current_number)
+			self.display_nums.insert(0, '-')
+		else:
+			self.display_nums.remove('-')
 		
+		self.result_string.set(''.join(self.display_nums))
+	
 	def percent(self):
 		pass
 	
