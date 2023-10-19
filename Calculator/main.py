@@ -1,4 +1,3 @@
-import ttkbootstrap as ttk
 from settings import *
 from button import *
 
@@ -70,7 +69,7 @@ class CalculatorApp(ttk.Window):
 				parent = self,
 				row = 0,
 				anchor = 'SE',
-				style = 'Main.TLabel',
+				style = 'Formula.TLabel',
 				string_var = self.formula_string
 				)
 		OutputLabel(
@@ -95,13 +94,13 @@ class CalculatorApp(ttk.Window):
 	
 	def math_symbols(self):
 		for data, symbol in MATH_POSITIONS.items():
-			Button(
+			NumberButtons(
 					parent = self,
 					text = symbol['text'],
 					row = symbol['row'],
 					column = symbol['column'],
 					span = symbol['span'],
-					func = None
+					func = self.math_press
 					)
 	
 	def math_operators(self):
@@ -139,15 +138,18 @@ class CalculatorApp(ttk.Window):
 	
 	def invert(self):
 		current_number = ''.join(self.display_nums)
-		if float(current_number) > 0:
-			self.display_nums.insert(0, '-')
-		else:
-			self.display_nums.remove('-')
-		
-		self.result_string.set(''.join(self.display_nums))
+		if current_number:
+			if float(current_number) > 0:
+				self.display_nums.insert(0, '-')
+			else:
+				del self.display_nums[0]
+			self.result_string.set(''.join(self.display_nums))
 	
 	def percent(self):
-		pass
+		current_number = float(''.join(self.display_nums))
+		percentage = current_number / 100
+		self.display_nums = list(str(percentage))
+		self.result_string.set(''.join(self.display_nums))
 	
 	def clear(self):
 		self.result_string.set('0')
@@ -155,8 +157,25 @@ class CalculatorApp(ttk.Window):
 		self.display_nums.clear()
 		self.full_operation.clear()
 	
-	def percent(self):
-		print('haha')
+	def math_press(self, symbol):
+		# self.formula_string = ttk.StringVar(value = '')
+		# self.result_string = ttk.StringVar(value = '0')
+		# self.display_nums = []
+		# self.full_operation = []
+		
+		current_number = ''.join(self.display_nums)
+		if current_number:
+			self.full_operation.append(current_number)
+			if symbol != '=':
+				self.full_operation.append(symbol)
+				self.display_nums.clear()
+				self.result_string.set('0')
+				self.formula_string.set(''.join(self.full_operation))
+			else:
+				formula = ''.join(self.full_operation)
+				result = eval(formula)
+				self.result_string.set(''.join(str(result)))
+				self.full_operation.clear()
 
 
 CalculatorApp()
