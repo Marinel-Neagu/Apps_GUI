@@ -1,5 +1,5 @@
 import ttkbootstrap as ttk
-from settings import *
+from settings import GAP_SIZE
 
 
 class OutputLabel(ttk.Label):
@@ -9,7 +9,12 @@ class OutputLabel(ttk.Label):
 				style = style,
 				textvariable = string_var,
 				)
-		self.grid(column = 0, row = row, columnspan = 4, sticky = anchor)
+		self.grid(
+				column = 0,
+				row = row,
+				columnspan = 4,
+				sticky = anchor
+				)
 
 
 class Button(ttk.Button):

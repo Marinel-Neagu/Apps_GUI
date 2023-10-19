@@ -1,5 +1,9 @@
-from settings import *
+import ttkbootstrap as ttk
 from button import Button, OutputLabel, NumberButtons
+from settings import (
+	APP_SIZE, MAIN_ROW, MAIN_COLUMN, FONT, NORMAL_FONT_SIZE, OUTPUT_FONT_SIZE, NUMBER_POSITIONS,
+	MATH_POSITIONS, MATH_OPERATORS
+	)
 
 try:
 	from ctypes import windll, byref, sizeof, c_int
