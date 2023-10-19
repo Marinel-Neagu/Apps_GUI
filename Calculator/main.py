@@ -134,12 +134,17 @@ class CalculatorApp(ttk.Window):
 	# 	math logic
 	def num_press(self, number):
 		self.display_nums.append(number)
-		full_operation = ''.join(self.display_nums)
-		self.result_string.set(full_operation)
-		print('press' + number)
+		full_number = ''.join(self.display_nums)
+		self.result_string.set(full_number)
 	
-	def invert(self, number):
-	
+	def invert(self):
+		current_number = ''.join(self.display_nums)
+		if float(current_number) > 0:
+			print('is working')
+			print(current_number)
+		
+	def percent(self):
+		pass
 	
 	def clear(self):
 		self.result_string.set('0')
