@@ -32,29 +32,6 @@ class CalculatorApp(ttk.Window):
 		self.rowconfigure(list(range(MAIN_ROW)), weight = 1, uniform = 'a')
 		self.columnconfigure(list(range(MAIN_COLUMN)), weight = 1, uniform = 'a')
 		
-		# font and style
-		ttk.Style().configure('Result.TLabel', font = (FONT, OUTPUT_FONT_SIZE))
-		ttk.Style().configure('Formula.TLabel', font = (FONT, NORMAL_FONT_SIZE))
-		ttk.Style().configure(
-				'Number.TButton',
-				font = (FONT, NORMAL_FONT_SIZE),
-				borderwidth = 5,
-				bordercolor = 'black',
-				)
-		ttk.Style().configure(
-				'Operators.TButton',
-				font = (FONT, NORMAL_FONT_SIZE),
-				borderwidth = 5,
-				bordercolor = 'black',
-				
-				)
-		ttk.Style().configure(
-				'Symbols.TButton',
-				font = (FONT, NORMAL_FONT_SIZE),
-				background = 'red'
-				
-				)
-		
 		# set data
 		self.formula_string = ttk.StringVar(value = '')
 		self.result_string = ttk.StringVar(value = '0')
@@ -76,7 +53,7 @@ class CalculatorApp(ttk.Window):
 		try:
 			HWND = windll.user32.GetParent(self.winfo_id())
 			DWMWA_ATTRIBUTE = 35
-			TITLE_BAR_COLOR = 0x00000000
+			TITLE_BAR_COLOR = 0x004C3720
 			windll.dwmapi.DwmSetWindowAttribute(HWND, DWMWA_ATTRIBUTE, byref(c_int(TITLE_BAR_COLOR)), sizeof(c_int))
 		
 		except:

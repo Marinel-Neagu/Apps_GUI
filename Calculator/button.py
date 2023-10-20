@@ -22,7 +22,7 @@ class Button(ttk.Button):
 		super().__init__(
 				master = parent,
 				text = text,
-				bootstyle = style,
+				style = style,
 				command = func
 				)
 		self.grid(
@@ -30,8 +30,8 @@ class Button(ttk.Button):
 				column = column,
 				columnspan = span,
 				sticky = 'news',
-				# padx = GAP_SIZE,  # is a problem on debian with padx and pady
-				# pady = GAP_SIZE
+				padx = GAP_SIZE,  # is a problem on debian with padx and pady
+				pady = GAP_SIZE
 				
 				)
 
@@ -41,7 +41,7 @@ class NumberButtons(Button):
 		super().__init__(
 				parent = parent,
 				text = text,
-				bootstyle = style,
+				style = style,
 				func = lambda: func(text),
 				span = span,
 				row = row,
