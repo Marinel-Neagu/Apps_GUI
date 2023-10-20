@@ -1,4 +1,5 @@
 import ttkbootstrap as ttk
+
 from button import Button, OutputLabel, NumberButtons
 from settings import (
 	APP_SIZE, FONT, NORMAL_FONT_SIZE, OUTPUT_FONT_SIZE,
@@ -57,7 +58,7 @@ class CalculatorApp(ttk.Window):
 			windll.dwmapi.DwmSetWindowAttribute(HWND, DWMWA_ATTRIBUTE, byref(c_int(TITLE_BAR_COLOR)), sizeof(c_int))
 		
 		except:
-			print('This is not working on macOS and GNU/Linux.:/')
+			pass
 	
 	def create_labels(self):
 		OutputLabel(
