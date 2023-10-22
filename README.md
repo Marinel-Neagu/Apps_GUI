@@ -1,2 +1,2 @@
 # Intermediate_Projects
-Only python with Tkinter
+Making modern looking app with python using CustomTkinter and Ttkboostrap
