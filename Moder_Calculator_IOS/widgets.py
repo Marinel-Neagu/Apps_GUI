@@ -2,7 +2,7 @@
 	You need to install the ttkbootstrap, pip install ttkbootstrap(I recomand to use a virtual environment)
 """
 import ttkbootstrap as ttk
-from settings import GAP_SIZE
+from configuration import GAP_SIZE
 
 
 class OutputLabel(ttk.Label):

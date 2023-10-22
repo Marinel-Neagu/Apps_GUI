@@ -3,8 +3,8 @@
 """
 import ttkbootstrap as ttk
 
-from button import Button, OutputLabel, NumberButtons
-from settings import (
+from widgets import Button, OutputLabel, NumberButtons
+from configuration import (
 	APP_SIZE, FONT, NORMAL_FONT_SIZE, OUTPUT_FONT_SIZE,
 	MAIN_ROW, MAIN_COLUMN,
 	NUMBER_POSITIONS, MATH_POSITIONS, MATH_OPERATORS
@@ -19,6 +19,7 @@ except Exception:
 class CalculatorApp(ttk.Window):
 	def __init__(self):
 		super().__init__(themename = 'superhero')
+		self.resizable(False, False)
 		self.bind('<Alt-s>', lambda e: self.destroy())
 		# setup
 		self.title("")
