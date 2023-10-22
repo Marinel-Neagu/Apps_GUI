@@ -1,3 +1,6 @@
+"""
+	You need to install the ttkbootstrap, pip install ttkbootstrap(I recomand to use a virtual environment)
+"""
 import ttkbootstrap as ttk
 
 from button import Button, OutputLabel, NumberButtons
@@ -9,7 +12,7 @@ from settings import (
 
 try:
 	from ctypes import windll, byref, sizeof, c_int
-except:
+except Exception:
 	pass
 
 
@@ -24,7 +27,7 @@ class CalculatorApp(ttk.Window):
 		self.geometry(f"{APP_SIZE[0]}x{APP_SIZE[1]}+{self.left}+{self.top}")
 		try:
 			self.iconbitmap('image/empty.ico')
-		except:
+		except Exception:
 			pass
 		# set title bar color (only on windows is working)
 		self.set_title_bar_color()
@@ -78,24 +81,31 @@ class CalculatorApp(ttk.Window):
 		# set widgets label
 		self.create_labels()
 		
-		# set widgets buttons and operators
+		# set widget buttons and operators
 		self.num_buttons()
 		self.math_symbols()
 		self.math_operators()
 		
 		self.mainloop()
 	
-	def set_title_bar_color(self: str) -> None:
-		
+	def set_title_bar_color(self) -> None:
+		"""
+It set the color for title bar, it works only in windows.
+		"""
 		try:
 			HWND = windll.user32.GetParent(self.winfo_id())
 			DWMWA_ATTRIBUTE: int = 35
 			TITLE_BAR_COLOR: int = 0x004C3720
 			windll.dwmapi.DwmSetWindowAttribute(HWND, DWMWA_ATTRIBUTE, byref(c_int(TITLE_BAR_COLOR)), sizeof(c_int))
-		except:
+		except Exception:
 			pass
 	
 	def create_labels(self) -> None:
+		"""
+		Creating the formula and result labels.
+
+		"""
+		# Formula Label
 		OutputLabel(
 				parent = self,
 				row = 0,
@@ -103,6 +113,7 @@ class CalculatorApp(ttk.Window):
 				style = 'Formula.TLabel',
 				string_var = self.formula_string
 				)
+		# Result Label
 		OutputLabel(
 				parent = self,
 				row = 1,
@@ -113,6 +124,9 @@ class CalculatorApp(ttk.Window):
 				)
 	
 	def num_buttons(self) -> None:
+		"""
+Creating the number buttons, from 0 to 9 and the '.'.
+		"""
 		for number, data in NUMBER_POSITIONS.items():
 			NumberButtons(
 					parent = self,
@@ -125,8 +139,12 @@ class CalculatorApp(ttk.Window):
 					)
 	
 	def math_symbols(self) -> None:
+		"""
+Creating the symbols, +, —, = and /
+
+		"""
 		for data, symbol in MATH_POSITIONS.items():
-			self.symbol_button = NumberButtons(
+			NumberButtons(
 					parent = self,
 					text = symbol['text'],
 					style = 'Symbol.TButton',
@@ -137,6 +155,11 @@ class CalculatorApp(ttk.Window):
 					)
 	
 	def math_operators(self) -> None:
+		"""
+		Adding the math operators: cleaning, percent and invert
+		"""
+		
+		# AC button
 		Button(
 				parent = self,
 				text = MATH_OPERATORS['clear']['text'],
@@ -147,6 +170,7 @@ class CalculatorApp(ttk.Window):
 				span = MATH_OPERATORS['clear']['span'],
 				
 				)
+		# Invert button
 		Button(
 				parent = self,
 				text = MATH_OPERATORS['invert']['text'],
@@ -156,7 +180,7 @@ class CalculatorApp(ttk.Window):
 				column = MATH_OPERATORS['invert']['column'],
 				span = MATH_OPERATORS['invert']['span'],
 				)
-		
+		# Percent button
 		Button(
 				parent = self,
 				text = MATH_OPERATORS['percent']['text'],
@@ -168,12 +192,22 @@ class CalculatorApp(ttk.Window):
 				)
 	
 	# 	math logic
-	def num_press(self, number) -> None:
+	def num_press(self, number: str) -> None:
+		"""
+		The logic for pressing a number, it set the label result and store the value in display_num.
+
+		:param number:
+		"""
 		self.display_nums.append(number)
+		print(self.display_nums)
 		full_number = ''.join(self.display_nums)
 		self.result_string.set(full_number)
 	
 	def invert(self) -> None:
+		"""
+		The Invert logic, add a '-' to the display_nums if is positive else it will remove it from the list.
+
+		"""
 		current_number = ''.join(self.display_nums)
 		if current_number:
 			if float(current_number) > 0:
@@ -183,6 +217,10 @@ class CalculatorApp(ttk.Window):
 			self.result_string.set(''.join(self.display_nums))
 	
 	def percent(self) -> None:
+		"""
+		The percent logic, just divide the number to 100 if is there.
+
+		"""
 		current_number = ''.join(self.display_nums)
 		if current_number != '':
 			percentage = float(current_number) / 100
@@ -190,7 +228,10 @@ class CalculatorApp(ttk.Window):
 			self.result_string.set(''.join(self.display_nums))
 	
 	def clear(self) -> None:
-		
+		"""
+		Clear the labels and the lists.
+
+		"""
 		self.result_string.set('0')
 		
 		self.formula_string.set('')
@@ -198,6 +239,11 @@ class CalculatorApp(ttk.Window):
 		self.full_operation.clear()
 	
 	def math_press(self, symbol: int) -> None:
+		"""
+		The math logic, take the full operation and put into an eval() function.And modifying the label and the list.
+
+		:param symbol:
+		"""
 		current_number: str = ''.join(self.display_nums)
 		try:
 			if current_number:
@@ -216,9 +262,11 @@ class CalculatorApp(ttk.Window):
 						else:
 							result = round(result, 5)
 					
+					# update the lists
 					self.full_operation.clear()
 					self.display_nums = list(str(result))
 					
+					# update the label with the new numbers
 					self.result_string.set(result)
 					self.formula_string.set(formula)
 		
