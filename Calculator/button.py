@@ -3,22 +3,22 @@ from settings import GAP_SIZE
 
 
 class OutputLabel(ttk.Label):
-	def __init__(self, parent, style, string_var, row, anchor):
+	def __init__(self, parent, style: str, string_var, row: int, anchor: str, column: int = 0):
 		super().__init__(
 				master = parent,
 				style = style,
 				textvariable = string_var,
 				)
 		self.grid(
-				column = 0,
 				row = row,
+				column = column,
 				columnspan = 4,
 				sticky = anchor
 				)
 
 
 class Button(ttk.Button):
-	def __init__(self, parent, text, func, row, column, span, style):
+	def __init__(self, parent, text: str, func: str, row: int, column: int, span: int, style: str):
 		super().__init__(
 				master = parent,
 				text = text,
@@ -47,7 +47,7 @@ class Button(ttk.Button):
 
 
 class NumberButtons(Button):
-	def __init__(self, parent, text, style, func, row, column, span):
+	def __init__(self, parent, text: str, style: str, func: str, row: int, column: int, span: int):
 		super().__init__(
 				parent = parent,
 				text = text,

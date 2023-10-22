@@ -19,8 +19,8 @@ class CalculatorApp(ttk.Window):
 		self.bind('<Alt-s>', lambda e: self.destroy())
 		# setup
 		self.title("")
-		self.left = int((self.winfo_screenwidth() - APP_SIZE[0]) / 2)
-		self.top = int((self.winfo_screenheight() - APP_SIZE[1]) / 2)
+		self.left: int = int((self.winfo_screenwidth() - APP_SIZE[0]) / 2)
+		self.top: int = int((self.winfo_screenheight() - APP_SIZE[1]) / 2)
 		self.geometry(f"{APP_SIZE[0]}x{APP_SIZE[1]}+{self.left}+{self.top}")
 		try:
 			self.iconbitmap('image/empty.ico')
@@ -36,8 +36,8 @@ class CalculatorApp(ttk.Window):
 		# set data
 		self.formula_string = ttk.StringVar(value = '')
 		self.result_string = ttk.StringVar(value = '0')
-		self.display_nums = []
-		self.full_operation = []
+		self.display_nums: list[int] = []
+		self.full_operation: list[int] = []
 		
 		# style
 		
@@ -67,12 +67,6 @@ class CalculatorApp(ttk.Window):
 				borderwidth = 0,
 				background = '#4E5D6C',
 				)
-		self.Style.configure(
-				'Operator2.TButton',
-				font = (FONT, NORMAL_FONT_SIZE),
-				borderwidth = 0,
-				background = '#4E5D6C',
-				)
 		
 		self.Style.configure(
 				'Symbol.TButton',
@@ -91,17 +85,17 @@ class CalculatorApp(ttk.Window):
 		
 		self.mainloop()
 	
-	def set_title_bar_color(self):
+	def set_title_bar_color(self: str) -> None:
 		
 		try:
 			HWND = windll.user32.GetParent(self.winfo_id())
-			DWMWA_ATTRIBUTE = 35
-			TITLE_BAR_COLOR = 0x004C3720
+			DWMWA_ATTRIBUTE: int = 35
+			TITLE_BAR_COLOR: int = 0x004C3720
 			windll.dwmapi.DwmSetWindowAttribute(HWND, DWMWA_ATTRIBUTE, byref(c_int(TITLE_BAR_COLOR)), sizeof(c_int))
 		except:
 			pass
 	
-	def create_labels(self):
+	def create_labels(self) -> None:
 		OutputLabel(
 				parent = self,
 				row = 0,
@@ -118,7 +112,7 @@ class CalculatorApp(ttk.Window):
 				
 				)
 	
-	def num_buttons(self):
+	def num_buttons(self) -> None:
 		for number, data in NUMBER_POSITIONS.items():
 			NumberButtons(
 					parent = self,
@@ -130,7 +124,7 @@ class CalculatorApp(ttk.Window):
 					span = data['span'],
 					)
 	
-	def math_symbols(self):
+	def math_symbols(self) -> None:
 		for data, symbol in MATH_POSITIONS.items():
 			self.symbol_button = NumberButtons(
 					parent = self,
@@ -142,7 +136,7 @@ class CalculatorApp(ttk.Window):
 					func = self.math_press
 					)
 	
-	def math_operators(self):
+	def math_operators(self) -> None:
 		Button(
 				parent = self,
 				text = MATH_OPERATORS['clear']['text'],
@@ -174,12 +168,12 @@ class CalculatorApp(ttk.Window):
 				)
 	
 	# 	math logic
-	def num_press(self, number):
+	def num_press(self, number) -> None:
 		self.display_nums.append(number)
 		full_number = ''.join(self.display_nums)
 		self.result_string.set(full_number)
 	
-	def invert(self):
+	def invert(self) -> None:
 		current_number = ''.join(self.display_nums)
 		if current_number:
 			if float(current_number) > 0:
@@ -188,14 +182,14 @@ class CalculatorApp(ttk.Window):
 				del self.display_nums[0]
 			self.result_string.set(''.join(self.display_nums))
 	
-	def percent(self):
+	def percent(self) -> None:
 		current_number = ''.join(self.display_nums)
 		if current_number != '':
 			percentage = float(current_number) / 100
 			self.display_nums = list(str(percentage))
 			self.result_string.set(''.join(self.display_nums))
 	
-	def clear(self):
+	def clear(self) -> None:
 		
 		self.result_string.set('0')
 		
@@ -203,8 +197,8 @@ class CalculatorApp(ttk.Window):
 		self.display_nums.clear()
 		self.full_operation.clear()
 	
-	def math_press(self, symbol):
-		current_number = ''.join(self.display_nums)
+	def math_press(self, symbol: int) -> None:
+		current_number: str = ''.join(self.display_nums)
 		try:
 			if current_number:
 				self.full_operation.append(current_number)
