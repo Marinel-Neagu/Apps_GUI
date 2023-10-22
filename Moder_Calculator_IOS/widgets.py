@@ -41,8 +41,7 @@ The class for operators and numbers buttons
 				column = column,
 				columnspan = span,
 				sticky = 'news',
-				padx = GAP_SIZE,  # is a problem on debian with padx and pady. I am not sure if is on my machine
-				# or not.
+				padx = GAP_SIZE,
 				pady = GAP_SIZE
 				
 				)
