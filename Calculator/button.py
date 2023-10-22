@@ -10,7 +10,7 @@ class OutputLabel(ttk.Label):
 	Label for result and formula
 	"""
 	
-	def __init__(self, parent, style: str, string_var, row: int, anchor: str, column: int = 0):
+	def __init__(self, parent, style: str, string_var, row: int, anchor: str, column: int = 0) -> None:
 		super().__init__(
 				master = parent,
 				style = style,
@@ -29,7 +29,7 @@ class Button(ttk.Button):
 The class for operators and numbers buttons
 	"""
 	
-	def __init__(self, parent, text: str, func, row: int, column: int, span: int, style: str):
+	def __init__(self, parent, text: str, func, row: int, column: int, span: int, style: str) -> None:
 		super().__init__(
 				master = parent,
 				text = text,
@@ -58,7 +58,7 @@ The class for operators and numbers buttons
 
 
 class NumberButtons(Button):
-	def __init__(self, parent, text: str, style: str, func: str, row: int, column: int, span: int) -> object:
+	def __init__(self, parent, text: str, style: str, func: str, row: int, column: int, span: int) -> None:
 		super().__init__(
 				parent = parent,
 				text = text,
