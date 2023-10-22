@@ -12,7 +12,7 @@ except Exception:
 
 
 class App(ttk.Window):
-	def __init__(self):
+	def __init__(self) -> None:
 		super().__init__(themename = 'solar')
 		self.bind('<Alt-s>', lambda _: self.destroy())
 		self.title(TITLE)
@@ -100,7 +100,7 @@ Layout for the timer
 		
 		self.button.pack()
 	
-	def play(self):
+	def play(self) -> None:
 		pass
 
 
@@ -109,8 +109,9 @@ class AlarmTab(ttk.Frame):
 Add the alarma layout
 	"""
 	
-	def __init__(self, parent):
+	def __init__(self, parent: str) -> None:
 		super().__init__(master = parent)
+		self.button = ttk.Button(self)
 
 
 # widgets clock

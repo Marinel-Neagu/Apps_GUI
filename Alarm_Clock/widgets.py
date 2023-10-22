@@ -5,7 +5,6 @@ import ttkbootstrap as ttk
 from lorem_text import lorem
 from settings import *
 import time
-from time_window import *
 
 
 class FrameClock(ttk.Frame):

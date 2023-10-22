@@ -41,36 +41,44 @@ class CalculatorApp(ttk.Window):
 		
 		# style
 		
-		self.Style = ttk.Style().configure(
+		self.Style = ttk.Style()
+		self.Style.configure(
 				'Result.TLabel',
-				font = (FONT, OUTPUT_FONT_SIZE)
+				font = (FONT, OUTPUT_FONT_SIZE),
+				borderwidth = 0,
 				)
 		
 		self.Style.configure(
 				'Formula.TLabel',
-				font = (FONT, NORMAL_FONT_SIZE)
+				font = (FONT, NORMAL_FONT_SIZE),
+				borderwidth = 0,
 				)
 		
 		self.Style.configure(
 				'Number.TButton',
 				font = (FONT, NORMAL_FONT_SIZE),
-				borderwidth = 5,
-				bordercolor = 'black',
+				borderwidth = 0,
+				background = '#4c9be8'
 				)
 		
 		self.Style.configure(
-				'Operators.TButton',
+				'Operator.TButton',
+				font = (FONT, NORMAL_FONT_SIZE),
+				borderwidth = 0,
+				background = '#4E5D6C',
+				)
+		self.Style.configure(
+				'Operator2.TButton',
+				font = (FONT, NORMAL_FONT_SIZE),
+				borderwidth = 0,
+				background = '#4E5D6C',
+				)
+		
+		self.Style.configure(
+				'Symbol.TButton',
 				font = (FONT, NORMAL_FONT_SIZE),
 				borderwidth = 0,
 				background = '#F0AD4E',
-				)
-		
-		self.Style.configure(
-				'Symbols.TButton',
-				font = (FONT, NORMAL_FONT_SIZE),
-				background = '#4E5D6C',
-				borderwidth = 0,
-				activebackground = 'red'
 				)
 		
 		# set widgets label
@@ -82,160 +90,150 @@ class CalculatorApp(ttk.Window):
 		self.math_operators()
 		
 		self.mainloop()
-
-
-def set_title_bar_color(self):
 	
-	try:
-		HWND = windll.user32.GetParent(self.winfo_id())
-		DWMWA_ATTRIBUTE = 35
-		TITLE_BAR_COLOR = 0x004C3720
-		windll.dwmapi.DwmSetWindowAttribute(HWND, DWMWA_ATTRIBUTE, byref(c_int(TITLE_BAR_COLOR)), sizeof(c_int))
-	except:
-		pass
-
-
-def create_labels(self):
-	OutputLabel(
-			parent = self,
-			row = 0,
-			anchor = 'SE',
-			style = 'Formula.TLabel',
-			string_var = self.formula_string
-			)
-	OutputLabel(
-			parent = self,
-			row = 1,
-			anchor = 'E',
-			style = 'Result.TLabel',
-			string_var = self.result_string
-			
-			)
-
-
-def num_buttons(self):
-	for number, data in NUMBER_POSITIONS.items():
-		NumberButtons(
+	def set_title_bar_color(self):
+		
+		try:
+			HWND = windll.user32.GetParent(self.winfo_id())
+			DWMWA_ATTRIBUTE = 35
+			TITLE_BAR_COLOR = 0x004C3720
+			windll.dwmapi.DwmSetWindowAttribute(HWND, DWMWA_ATTRIBUTE, byref(c_int(TITLE_BAR_COLOR)), sizeof(c_int))
+		except:
+			pass
+	
+	def create_labels(self):
+		OutputLabel(
 				parent = self,
-				text = number,
-				style = 'Number.TButton',
-				func = self.num_press,
-				row = data['row'],
-				column = data['column'],
-				span = data['span'],
+				row = 0,
+				anchor = 'SE',
+				style = 'Formula.TLabel',
+				string_var = self.formula_string
 				)
-
-
-def math_symbols(self):
-	for data, symbol in MATH_POSITIONS.items():
-		NumberButtons(
+		OutputLabel(
 				parent = self,
-				text = symbol['text'],
-				style = 'Symbols.TButton',
-				row = symbol['row'],
-				column = symbol['column'],
-				span = symbol['span'],
-				func = self.math_press
+				row = 1,
+				anchor = 'E',
+				style = 'Result.TLabel',
+				string_var = self.result_string
+				
 				)
-
-
-def math_operators(self):
-	Button(
-			parent = self,
-			text = MATH_OPERATORS['clear']['text'],
-			style = 'Operators.TButton',
-			func = self.clear,
-			row = MATH_OPERATORS['clear']['row'],
-			column = MATH_OPERATORS['clear']['column'],
-			span = MATH_OPERATORS['clear']['span'],
-			
-			)
-	Button(
-			parent = self,
-			text = MATH_OPERATORS['invert']['text'],
-			style = 'Operators.TButton',
-			func = self.invert,
-			row = MATH_OPERATORS['invert']['row'],
-			column = MATH_OPERATORS['invert']['column'],
-			span = MATH_OPERATORS['invert']['span'],
-			)
 	
-	Button(
-			parent = self,
-			text = MATH_OPERATORS['percent']['text'],
-			style = 'Operators.TButton',
-			func = self.percent,
-			row = MATH_OPERATORS['percent']['row'],
-			column = MATH_OPERATORS['percent']['column'],
-			span = MATH_OPERATORS['percent']['span'],
-			)
-
-
-# 	math logic
-def num_press(self, number):
-	self.display_nums.append(number)
-	full_number = ''.join(self.display_nums)
-	self.result_string.set(full_number)
-
-
-def invert(self):
-	current_number = ''.join(self.display_nums)
-	if current_number:
-		if float(current_number) > 0:
-			self.display_nums.insert(0, '-')
-		else:
-			del self.display_nums[0]
-		self.result_string.set(''.join(self.display_nums))
-
-
-def percent(self):
-	current_number = ''.join(self.display_nums)
-	if current_number != '':
-		percentage = float(current_number) / 100
-		self.display_nums = list(str(percentage))
-		self.result_string.set(''.join(self.display_nums))
-
-
-def clear(self):
+	def num_buttons(self):
+		for number, data in NUMBER_POSITIONS.items():
+			NumberButtons(
+					parent = self,
+					text = number,
+					style = 'Number.TButton',
+					func = self.num_press,
+					row = data['row'],
+					column = data['column'],
+					span = data['span'],
+					)
 	
-	self.result_string.set('0')
+	def math_symbols(self):
+		for data, symbol in MATH_POSITIONS.items():
+			self.symbol_button = NumberButtons(
+					parent = self,
+					text = symbol['text'],
+					style = 'Symbol.TButton',
+					row = symbol['row'],
+					column = symbol['column'],
+					span = symbol['span'],
+					func = self.math_press
+					)
 	
-	self.formula_string.set('')
-	self.display_nums.clear()
-	self.full_operation.clear()
-
-
-def math_press(self, symbol):
-	current_number = ''.join(self.display_nums)
-	try:
+	def math_operators(self):
+		Button(
+				parent = self,
+				text = MATH_OPERATORS['clear']['text'],
+				style = 'Operator.TButton',
+				func = self.clear,
+				row = MATH_OPERATORS['clear']['row'],
+				column = MATH_OPERATORS['clear']['column'],
+				span = MATH_OPERATORS['clear']['span'],
+				
+				)
+		Button(
+				parent = self,
+				text = MATH_OPERATORS['invert']['text'],
+				style = 'Operator.TButton',
+				func = self.invert,
+				row = MATH_OPERATORS['invert']['row'],
+				column = MATH_OPERATORS['invert']['column'],
+				span = MATH_OPERATORS['invert']['span'],
+				)
+		
+		Button(
+				parent = self,
+				text = MATH_OPERATORS['percent']['text'],
+				style = 'Operator.TButton',
+				func = self.percent,
+				row = MATH_OPERATORS['percent']['row'],
+				column = MATH_OPERATORS['percent']['column'],
+				span = MATH_OPERATORS['percent']['span'],
+				)
+	
+	# 	math logic
+	def num_press(self, number):
+		self.display_nums.append(number)
+		full_number = ''.join(self.display_nums)
+		self.result_string.set(full_number)
+	
+	def invert(self):
+		current_number = ''.join(self.display_nums)
 		if current_number:
-			self.full_operation.append(current_number)
-			if symbol != '=':
-				self.full_operation.append(symbol)
-				self.display_nums.clear()
-				self.result_string.set('')
-				self.formula_string.set(''.join(self.full_operation))
+			if float(current_number) > 0:
+				self.display_nums.insert(0, '-')
 			else:
-				formula = ' '.join(self.full_operation)
-				result = eval(formula)
-				if isinstance(result, float):
-					if result.is_integer():
-						result = int(result)
-					else:
-						result = round(result, 5)
-				
-				self.full_operation.clear()
-				self.display_nums = list(str(result))
-				
-				self.result_string.set(result)
-				self.formula_string.set(formula)
+				del self.display_nums[0]
+			self.result_string.set(''.join(self.display_nums))
 	
-	except ZeroDivisionError:
-		self.result_string.set('Invalid!')
-		self.display_nums.clear()
+	def percent(self):
+		current_number = ''.join(self.display_nums)
+		if current_number != '':
+			percentage = float(current_number) / 100
+			self.display_nums = list(str(percentage))
+			self.result_string.set(''.join(self.display_nums))
+	
+	def clear(self):
+		
+		self.result_string.set('0')
 		
 		self.formula_string.set('')
+		self.display_nums.clear()
 		self.full_operation.clear()
+	
+	def math_press(self, symbol):
+		current_number = ''.join(self.display_nums)
+		try:
+			if current_number:
+				self.full_operation.append(current_number)
+				if symbol != '=':
+					self.full_operation.append(symbol)
+					self.display_nums.clear()
+					self.result_string.set('')
+					self.formula_string.set(''.join(self.full_operation))
+				else:
+					formula = ' '.join(self.full_operation)
+					result = eval(formula)
+					if isinstance(result, float):
+						if result.is_integer():
+							result = int(result)
+						else:
+							result = round(result, 5)
+					
+					self.full_operation.clear()
+					self.display_nums = list(str(result))
+					
+					self.result_string.set(result)
+					self.formula_string.set(formula)
+		
+		except ZeroDivisionError:
+			self.result_string.set('Invalid!')
+			self.display_nums.clear()
+			
+			self.formula_string.set('')
+			self.full_operation.clear()
 
 
 CalculatorApp()

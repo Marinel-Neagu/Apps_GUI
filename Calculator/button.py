@@ -25,15 +25,25 @@ class Button(ttk.Button):
 				style = style,
 				command = func
 				)
-		self.grid(
-				row = row,
-				column = column,
-				columnspan = span,
-				sticky = 'news',
-				padx = GAP_SIZE,  # is a problem on debian with padx and pady
-				pady = GAP_SIZE
-				
-				)
+		try:
+			self.grid(
+					row = row,
+					column = column,
+					columnspan = span,
+					sticky = 'news',
+					padx = GAP_SIZE,  # is a problem on debian with padx and pady, i am not sure if is on my machine
+					# or not
+					pady = GAP_SIZE
+					
+					)
+		except:
+			self.grid(
+					row = row,
+					column = column,
+					columnspan = span,
+					sticky = 'news',
+					
+					)
 
 
 class NumberButtons(Button):
