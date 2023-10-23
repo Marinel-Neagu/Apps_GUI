@@ -27,7 +27,7 @@ class CalculatorApp(ttk.Window):
 		self.top: int = int((self.winfo_screenheight() - APP_SIZE[1]) / 2)
 		self.geometry(f"{APP_SIZE[0]}x{APP_SIZE[1]}+{self.left}+{self.top}")
 		try:
-			self.iconbitmap('empty.ico')
+			self.iconbitmap('image/empty.ico')
 		except Exception:
 			pass
 		# set title bar color (only on windows is working)
