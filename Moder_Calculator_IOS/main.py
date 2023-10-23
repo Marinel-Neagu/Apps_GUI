@@ -13,7 +13,7 @@ from configuration import (
 try:
 	from ctypes import windll, byref, sizeof, c_int
 except Exception:
-	print('sorry')
+	pass
 
 
 class CalculatorApp(ttk.Window):
