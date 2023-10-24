@@ -3,7 +3,7 @@ from configuration import BOARD_SIZE
 
 
 class BoardGame(ttk.Frame):
-	def __init__(self, parent, relx = 0.5, rely = 0.4):
+	def __init__(self, parent, relx, rely):
 		super().__init__(master = parent)
 		self.columnconfigure(list(range(BOARD_SIZE[0])), weight = 1, uniform = 'a')
 		self.rowconfigure(list(range(BOARD_SIZE[1])), weight = 1, uniform = 'a')

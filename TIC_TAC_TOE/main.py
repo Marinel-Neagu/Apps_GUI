@@ -13,7 +13,7 @@ class Application(ttk.Window):
 		self.set_window_size(MAIN_SIZE[0], MAIN_SIZE[1])
 		
 		# set layout
-		self.board_game = BoardGame(self)
+		self.board_game = BoardGame(self, relx = 0, rely = 0)
 		self.board_score = BoardScore(self)
 		
 		self.mainloop()
