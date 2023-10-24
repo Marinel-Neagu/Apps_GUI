@@ -2,6 +2,7 @@
 	You need to install the ttkbootstrap, pip install ttkbootstrap(I recomand to use a virtual environment)
 """
 import ttkbootstrap as ttk
+import os, sys
 
 from widgets import Button, OutputLabel, NumberButtons
 from configuration import (
@@ -27,9 +28,11 @@ class CalculatorApp(ttk.Window):
 		self.top: int = int((self.winfo_screenheight() - APP_SIZE[1]) / 2)
 		self.geometry(f"{APP_SIZE[0]}x{APP_SIZE[1]}+{self.left}+{self.top}")
 		try:
-			self.iconbitmap('image/empty.ico')
+			image_path = self.resource_path('image/empty.ico')
+			self.iconbitmap(image_path)
 		except Exception:
 			pass
+		
 		# set title bar color (only on windows is working)
 		self.set_title_bar_color()
 		
@@ -276,6 +279,13 @@ Creating the symbols, +, —, = and /
 			
 			self.formula_string.set('')
 			self.full_operation.clear()
+	
+	def resource_path(self, relative_path: str) -> str:
+		try:
+			base_path = sys._MEIPASS
+		except Exception:
+			base_path = os.path.abspath(".")
+		return os.path.join(base_path, relative_path)
 
 
 CalculatorApp()
