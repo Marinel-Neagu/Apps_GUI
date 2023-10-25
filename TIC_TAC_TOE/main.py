@@ -1,19 +1,32 @@
 import ttkbootstrap as ttk
 import random, sys, os
-from configuration import MAIN_SIZE
+from configuration import MAIN_SIZE, BOARD_FONT_SIZE, BOARD_FONT
 from widgets import BoardGame, BoardScore
+
+try:
+	from ctypes import windll, byref, sizeof, c_int
+except Exception:
+	pass
 
 
 class Application(ttk.Window):
 	def __init__(self):
-		super().__init__(themename = 'superhero')
+		super().__init__(themename = 'tictactoe')
 		self.bind('<Alt-s>', lambda event: self.destroy())
 		self.title('TIC TAC TOE')
 		self.set_emtpy_icon()
 		self.set_window_size(MAIN_SIZE[0], MAIN_SIZE[1])
+		self.Style = ttk.Style()
+		self.Style.configure(
+				'Board.TButton',
+				font = (BOARD_FONT, BOARD_FONT_SIZE),
+				borderthickness = 0,
+				borderwidth = 0,
+				
+				)
 		
 		# set layout
-		self.board_game = BoardGame(self, relx = 0, rely = 0)
+		self.board_game = BoardGame(self, style = 'Board.TButton', relx = 0, rely = 0)
 		self.board_score = BoardScore(self)
 		
 		self.mainloop()
@@ -38,7 +51,16 @@ class Application(ttk.Window):
 		self.geometry(f'{width}x{height}+{left}+{top}')
 	
 	def set_title_bar_color(self):
-		pass
+		"""
+It works only on Windows, not on GNU/Linux and macOS.
+		"""
+		try:
+			HWND = windll.user32.GetParent(self.winfo_id())
+			DWMWA_ATTRIBUTE = 35
+			TITLE_BAR_COLOR = 0x00000000
+			windll.dwmapi.DwmSetWindowAttribute(HWND, DWMWA_ATTRIBUTE, byref(c_int(TITLE_BAR_COLOR)), sizeof(c_int))
+		except Exception:
+			pass
 
 
 if __name__ == '__main__':

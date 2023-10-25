@@ -3,7 +3,7 @@ from configuration import BOARD_SIZE
 
 
 class BoardGame(ttk.Frame):
-	def __init__(self, parent, relx, rely):
+	def __init__(self, parent, style, relx, rely):
 		super().__init__(master = parent)
 		self.columnconfigure(list(range(BOARD_SIZE[0])), weight = 1, uniform = 'a')
 		self.rowconfigure(list(range(BOARD_SIZE[1])), weight = 1, uniform = 'a')
@@ -14,7 +14,8 @@ class BoardGame(ttk.Frame):
 						parent = self,
 						row = i,
 						column = j,
-						text = 'X'
+						text = 'X',
+						style = style,
 						)
 				
 				self.pack(expand = True, fill = 'both', anchor = 'center')
@@ -35,6 +36,22 @@ class BoardScore(ttk.Frame):
 		self.pack(expand = True, fill = 'both', anchor = 'center')
 
 
+class Button(ttk.Button):
+	def __init__(self, parent, text, row, column, style):
+		super().__init__(
+				master = parent,
+				text = text,
+				style = style
+				)
+		self.grid(
+				row = row,
+				column = column,
+				sticky = 'news',
+				padx = 10,
+				pady = 10
+				)
+
+
 class Labels(ttk.Label):
 	def __init__(self, parent, text, row, column):
 		super().__init__(
@@ -45,19 +62,4 @@ class Labels(ttk.Label):
 				row = row,
 				column = column,
 				sticky = 'news',
-				)
-
-
-class Button(ttk.Button):
-	def __init__(self, parent, text, row, column):
-		super().__init__(
-				master = parent,
-				text = text
-				)
-		self.grid(
-				row = row,
-				column = column,
-				sticky = 'news',
-				# expand = True,
-				# fill = 'both'
 				)
