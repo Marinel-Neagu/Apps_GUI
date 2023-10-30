@@ -3,7 +3,7 @@ from configuration import BOARD_SIZE
 
 
 class BoardGame(ttk.Frame):
-	def __init__(self, parent, style, relx, rely):
+	def __init__(self, parent, style, relx, rely, relheight, relwidth):
 		super().__init__(master = parent)
 		self.columnconfigure(list(range(BOARD_SIZE[0])), weight = 1, uniform = 'a')
 		self.rowconfigure(list(range(BOARD_SIZE[1])), weight = 1, uniform = 'a')
@@ -14,26 +14,37 @@ class BoardGame(ttk.Frame):
 						parent = self,
 						row = i,
 						column = j,
-						text = 'X',
+						text = '',
 						style = style,
 						)
-				
-				self.pack(expand = True, fill = 'both', anchor = 'center')
+		self.place(
+				relx = relx,
+				rely = rely,
+				relwidth = relwidth,
+				relheight = relheight
+				)
 
 
 class BoardScore(ttk.Frame):
-	def __init__(self, parent):
+	def __init__(self, parent, relx, rely, relwidth, relheight):
 		super().__init__(master = parent)
-		self.columnconfigure(0, weight = 1, uniform = 'b')
+		self.columnconfigure(list(range(5)), weight = 1, uniform = 'b')
 		self.rowconfigure((0, 1), weight = 1, uniform = 'b')
-		Labels(
-				parent = self,
-				text = 'Score',
+		self.place(relx = relx, rely = rely)
+		self.player_1 = Labels(
+				self,
+				text = 'Player 1',
 				row = 0,
 				column = 0
 				)
 		
-		self.pack(expand = True, fill = 'both', anchor = 'center')
+		self.player_2 = Labels(
+				self,
+				text = 'Player 2',
+				row = 1,
+				column = 0
+				)
+		self.place(relx = relx, rely = rely, relwidth = relwidth, relheight = relheight)
 
 
 class Button(ttk.Button):

@@ -11,7 +11,7 @@ except Exception:
 
 class Application(ttk.Window):
 	def __init__(self):
-		super().__init__(themename = 'tictactoe')
+		super().__init__(themename = 'superhero')
 		self.bind('<Alt-s>', lambda event: self.destroy())
 		self.title('TIC TAC TOE')
 		self.set_emtpy_icon()
@@ -26,8 +26,21 @@ class Application(ttk.Window):
 				)
 		
 		# set layout
-		self.board_game = BoardGame(self, style = 'Board.TButton', relx = 0, rely = 0)
-		self.board_score = BoardScore(self)
+		self.board_game = BoardGame(
+				self, style = 'Board.TButton',
+				relx = 0,
+				rely = 0,
+				relwidth = 1,
+				relheight = 1
+				)
+		self.board_score = BoardScore(
+				self,
+				relx = 0.5,
+				rely = 1,
+				relwidth = 1,
+				relheight = 0.5
+				
+				)
 		
 		self.mainloop()
 	
