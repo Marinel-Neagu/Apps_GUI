@@ -5,9 +5,15 @@ from configuration import BOARD_SIZE
 
 # set the Board with X and 0
 class BoardGame(ttk.Frame):
-	def __init__(self, parent, style):
+	def __init__(self, parent, style, player_1, tie, player_2, ):
 		super().__init__(master = parent)
 		# set data
+		self.player_1 = player_1
+		self.tie_score = tie
+		self.player_2 = player_2
+		self.x_score = 0
+		self.o_score = 0
+		self.t_score = 0
 		self.players_list = ['X', 'O']
 		self.player = self.players_list[0]
 		self.board_position = [
@@ -34,72 +40,94 @@ class BoardGame(ttk.Frame):
 						)
 	
 	def next_turn(self, row, column):
-		# Check if the button is empty and no winner has been determined yet
+		
 		if self.board_position[row][column]['text'] == "" and self.check_winner() is False:
 			
 			if self.player == self.players_list[0]:
-				# Set the button text to the current player's symbol
+				
 				self.board_position[row][column]['text'] = self.player
 				
 				if self.check_winner() is False:
-					# Switch to the next player's turn
 					self.player = self.players_list[1]
+				
+				elif self.check_winner() is True:
+					self.x_score += 1
+					self.player_1.set(self.x_score)
+				
+				elif self.check_winner() == "Tie":
+					self.t_score += 1
+					self.tie_score.set(self.t_score)
+			
 			else:
 				self.board_position[row][column]['text'] = self.player
 				
 				if self.check_winner() is False:
 					self.player = self.players_list[0]
+				elif self.check_winner() is True:
+					self.o_score += 1
+					self.player_2.set(self.o_score)
+				
+				elif self.check_winner() == "Tie":
+					self.t_score += 1
+					self.tie_score.set(self.t_score)
 		else:
 			self.new_game()
 	
 	def check_winner(self):
+		# Check for winning conditions
 		for row in range(3):
 			if self.board_position[row][0]['text'] == self.board_position[row][1]['text'] == \
-					self.board_position[row][2]['text'] != '':
+					self.board_position[row][2]['text'] != "":
 				return True
+		
 		for column in range(3):
 			if self.board_position[0][column]['text'] == self.board_position[1][column]['text'] == \
-					self.board_position[2][column]['text'] != '':
+					self.board_position[2][column]['text'] != "":
 				return True
+		
 		if self.board_position[0][0]['text'] == self.board_position[1][1]['text'] == \
-				self.board_position[2][2]['text'] != '':
+				self.board_position[2][2]['text'] != "":
 			return True
+		
 		elif self.board_position[0][2]['text'] == self.board_position[1][1]['text'] == \
-				self.board_position[2][0]['text'] != '':
+				self.board_position[2][0]['text'] != "":
 			return True
-		elif self.empty_space() is False:
-			print('is not empty')
+		elif self.empty_spaces() is False:
+			return 'Tie'
 		else:
 			return False
 	
-	def empty_space(self):
-		empty_space = 9
+	def empty_spaces(self):
+		spaces = 9
 		for row in range(3):
-			for col in range(3):
-				if self.board_position[row][col]['text'] != '':
-					empty_space -= 1
-		if empty_space == 0:
+			for column in range(3):
+				if self.board_position[row][column]['text'] != '':
+					spaces -= 1
+		if spaces == 0:
 			return False
 		else:
 			return True
 	
 	def new_game(self):
-		sleep(2)
+		# Clear the button texts and backgrounds
 		for row in range(3):
-			for col in range(3):
-				self.board_position[row][col]['text'] = ''
+			for column in range(3):
+				self.board_position[row][column]['text'] = ''
 
 
 # set the Board Score Frame, it contains the bottom labels
 
 
 class BoardScore(ttk.Frame):
-	def __init__(self, parent, style):
+	
+	def __init__(
+			self, parent, style, player_1, tie, player_2,
+			):
 		super().__init__(master = parent)
 		# data score
-		self.player_1_score = ttk.IntVar(value = 0)
-		self.player_2_score = ttk.IntVar(value = 0)
-		self.tie_score = ttk.IntVar(value = 0)
+		self.player_1_score = player_1
+		self.player_2_score = player_2
+		self.tie_score = tie
 		
 		self.columnconfigure(list(range(5)), weight = 1, uniform = 'b')
 		self.rowconfigure((0, 1), weight = 1, uniform = 'b')

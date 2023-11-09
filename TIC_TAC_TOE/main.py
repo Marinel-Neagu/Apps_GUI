@@ -46,9 +46,24 @@ class Application(ttk.Window):
 				font = (SCORE_FONT, SCORE_FONT_SIZE),
 				
 				)
-		
-		BoardGame(parent = self, style = 'Board.TButton')
-		BoardScore(parent = self, style = 'Board.TLabel')
+		# 	set player data
+		self.player_1 = ttk.IntVar(value = 0)
+		self.tie_score = ttk.IntVar(value = 0)
+		self.player_2 = ttk.IntVar(value = 0)
+		BoardGame(
+				parent = self,
+				style = 'Board.TButton',
+				player_1 = self.player_1,
+				tie = self.tie_score,
+				player_2 = self.player_2,
+				)
+		BoardScore(
+				parent = self,
+				style = 'Board.TLabel',
+				player_1 = self.player_1,
+				tie = self.tie_score,
+				player_2 = self.player_2,
+				)
 		
 		# set layout
 		
