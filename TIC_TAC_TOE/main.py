@@ -1,6 +1,6 @@
 import ttkbootstrap as ttk
 import sys, os
-from configuration import MAIN_SIZE, BOARD_FONT_SIZE, BOARD_FONT, SCORE_FONT_SIZE, SCORE_FONT
+from configuration import *
 from widgets import BoardGame, BoardScore
 
 # add the color title.(it works only on windows)
@@ -12,7 +12,7 @@ except Exception:
 
 class Application(ttk.Window):
 	def __init__(self):
-		super().__init__(themename = 'superhero')
+		super().__init__(themename = 'darkly')
 		self.bind('<Alt-s>', lambda event: self.destroy())
 		self.title('')
 		self.set_emtpy_icon()
@@ -22,9 +22,9 @@ class Application(ttk.Window):
 		self.Style = ttk.Style()
 		self.Style.configure(
 				style = 'Board.TButton',
-				font = (BOARD_FONT, BOARD_FONT_SIZE),
-				background = '#2B4155',
-				bordercolor = '#FFF',
+				font = (BOARD_GAME_FONT, BOARD_GAME_FONT_SIZE),
+				background = '#1F1F1F',
+				bordercolor = '#121212',
 				borderthickness = 10,
 				borderwidth = 2,
 				justify = 'center',
@@ -37,13 +37,34 @@ class Application(ttk.Window):
 						('disabled', 'white')
 						],
 				background = [
-						('active', '#2B4155'),
-						('disabled', '#2B4155')]
+						('active', '#222222'),
+						('disabled', '#222222')]
+				)
+		self.Style.configure(
+				style = 'Reset.TButton',
+				font = (RESET_BUTTON_FONT, RESET_BUTTON_FONT_SIZE),
+				background = '#e74c3c',
+				bordercolor = '#222222',
+				borderthickness = 10,
+				borderwidth = 2,
+				justify = 'center',
+				relief = 'solid',
+				)
+		self.Style.map(
+				'Reset.TButton',
+				foreground = [
+						('active', ''),
+						('disabled', 'white')
+						],
+				background = [
+						('active', '#e74c3c'),
+						('disabled', '#e74c3c')]
 				)
 		
 		self.Style.configure(
 				style = 'Board.TLabel',
-				font = (SCORE_FONT, SCORE_FONT_SIZE),
+				font = (BOARD_SCORE_FONT, BOARD_SCORE_FONT_SIZE),
+				foreground = '#E1D9D1'
 				
 				)
 		# 	set player data
@@ -60,14 +81,19 @@ class Application(ttk.Window):
 		BoardScore(
 				parent = self,
 				style = 'Board.TLabel',
+				style_button = 'Reset.TButton',
 				player_1 = self.player_1,
 				tie = self.tie_score,
 				player_2 = self.player_2,
+				function = self.clean_board
 				)
 		
-		# set layout
-		
 		self.mainloop()
+	
+	def clean_board(self):
+		self.player_1.set(0)
+		self.player_2.set(0)
+		self.tie_score.set(0)
 	
 	def set_emtpy_icon(self):
 		try:

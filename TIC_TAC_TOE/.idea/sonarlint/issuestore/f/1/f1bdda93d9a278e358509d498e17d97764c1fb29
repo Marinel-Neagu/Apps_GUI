@@ -1,2 +1,4 @@
 
-mpython:S1192"NDefine a constant instead of duplicating this literal 'Board.TButton' 3 times.(ûˆ°ú8„É²¥»1
+mpython:S1192,"NDefine a constant instead of duplicating this literal 'Reset.TButton' 3 times.(ğïì8€Ë‚Ë»1
+mpython:S1192"NDefine a constant instead of duplicating this literal 'Board.TButton' 3 times.(ûˆ°ú8Ë‚Ë»1
+kpython:S2208"GImport only needed names or import the module and then use its members.(„ïüüÿÿÿÿ8Ë‚Ë»1

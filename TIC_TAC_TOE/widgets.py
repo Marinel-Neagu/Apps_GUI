@@ -3,7 +3,6 @@ from time import sleep
 from configuration import BOARD_SIZE
 
 
-# set the Board with X and 0
 class BoardGame(ttk.Frame):
 	def __init__(self, parent, style, player_1, tie, player_2, ):
 		super().__init__(master = parent)
@@ -37,6 +36,8 @@ class BoardGame(ttk.Frame):
 						row = rows,
 						column = cols,
 						style = style,
+						columnspan = 1,
+						rowspan = 1,
 						)
 	
 	def next_turn(self, row, column):
@@ -51,12 +52,10 @@ class BoardGame(ttk.Frame):
 					self.player = self.players_list[1]
 				
 				elif self.check_winner() is True:
-					self.x_score += 1
-					self.player_1.set(self.x_score)
+					self.player_1.set(self.player_1.get() + 1)
 				
 				elif self.check_winner() == "Tie":
-					self.t_score += 1
-					self.tie_score.set(self.t_score)
+					self.tie_score.set(self.tie_score.get() + 1)
 			
 			else:
 				self.board_position[row][column]['text'] = self.player
@@ -64,14 +63,14 @@ class BoardGame(ttk.Frame):
 				if self.check_winner() is False:
 					self.player = self.players_list[0]
 				elif self.check_winner() is True:
-					self.o_score += 1
-					self.player_2.set(self.o_score)
+					self.player_2.set(self.player_2.get() + 1)
 				
 				elif self.check_winner() == "Tie":
-					self.t_score += 1
-					self.tie_score.set(self.t_score)
+					self.tie_score.set(self.tie_score.get() + 1)
 		else:
-			self.new_game()
+			
+			if self.empty_spaces() is False or self.check_winner() is True:
+				self.clean_board()
 	
 	def check_winner(self):
 		# Check for winning conditions
@@ -108,20 +107,24 @@ class BoardGame(ttk.Frame):
 		else:
 			return True
 	
-	def new_game(self):
+	def clean_board(self):
 		# Clear the button texts and backgrounds
 		for row in range(3):
 			for column in range(3):
 				self.board_position[row][column]['text'] = ''
 
 
-# set the Board Score Frame, it contains the bottom labels
-
-
 class BoardScore(ttk.Frame):
 	
 	def __init__(
-			self, parent, style, player_1, tie, player_2,
+			self,
+			parent,
+			style,
+			player_1,
+			tie,
+			player_2,
+			function,
+			style_button,
 			):
 		super().__init__(master = parent)
 		# data score
@@ -129,7 +132,7 @@ class BoardScore(ttk.Frame):
 		self.player_2_score = player_2
 		self.tie_score = tie
 		
-		self.columnconfigure(list(range(5)), weight = 1, uniform = 'b')
+		self.columnconfigure(list(range(10)), weight = 1, uniform = 'b')
 		self.rowconfigure((0, 1), weight = 1, uniform = 'b')
 		self.pack(fill = 'both', side = 'bottom')
 		
@@ -140,7 +143,7 @@ class BoardScore(ttk.Frame):
 				text = 'Player 1(x)',
 				row = 0,
 				column = 0,
-				columnspan = 2,
+				columnspan = 3,
 				style = style,
 				)
 		self.tie = Labels(
@@ -148,7 +151,7 @@ class BoardScore(ttk.Frame):
 				textvariable = None,
 				text = 'Tie ',
 				row = 0,
-				column = 2,
+				column = 4,
 				columnspan = 2,
 				style = style,
 				)
@@ -158,9 +161,20 @@ class BoardScore(ttk.Frame):
 				textvariable = None,
 				text = 'Player 2(o)',
 				row = 0,
-				column = 4,
-				columnspan = 2,
+				column = 6,
+				columnspan = 3,
 				style = style,
+				)
+		self.reset_button = Button(
+				parent = self,
+				text = 'Reset\nGame',
+				command = function,
+				row = 0,
+				column = 9,
+				columnspan = 3,
+				rowspan = 2,
+				style = style_button,
+				
 				)
 		# show score
 		self.label_player_1_score = Labels(
@@ -169,7 +183,7 @@ class BoardScore(ttk.Frame):
 				text = '',
 				row = 1,
 				column = 0,
-				columnspan = 2,
+				columnspan = 3,
 				style = style,
 				
 				)
@@ -179,7 +193,7 @@ class BoardScore(ttk.Frame):
 				textvariable = self.tie_score,
 				text = '',
 				row = 1,
-				column = 2,
+				column = 4,
 				columnspan = 2,
 				style = style,
 				)
@@ -188,16 +202,15 @@ class BoardScore(ttk.Frame):
 				textvariable = self.player_2_score,
 				text = '',
 				row = 1,
-				column = 4,
-				columnspan = 2,
-				
+				column = 6,
+				columnspan = 3,
 				style = style,
 				)
 
 
 class Button(ttk.Button):
 	
-	def __init__(self, parent, text, command, row, column, style):
+	def __init__(self, parent, text, command, row, column, columnspan, rowspan, style):
 		# set data
 		super().__init__(
 				master = parent,
@@ -211,6 +224,8 @@ class Button(ttk.Button):
 				row = row,
 				column = column,
 				sticky = 'news',
+				columnspan = columnspan,
+				rowspan = rowspan,
 				)
 
 
@@ -223,6 +238,7 @@ class Labels(ttk.Label):
 				style = style,
 				anchor = 'center',
 				)
+		
 		self.grid(
 				row = row,
 				column = column,
