@@ -31,7 +31,7 @@ BOARD_SCORE = {
 		'TEXT_COLOR': '#E1D9D1'
 		}
 RESET_BUTTON = {
-		'FONT'                : '',
+		'FONT'                : 'Helvetica',
 		'SIZE'                : 34,
 		'BACKGROUND'          : '#E74C3C',
 		'HOVER_COLOR_ACTIVE'  : '#E74C3C',
