@@ -58,7 +58,6 @@ class BoardGame(ttk.Frame):
 			
 			else:
 				self.board_position[row][column]['text'] = self.player
-				
 				if self.check_winner() is False:
 					self.player = self.players_list[0]
 				elif self.check_winner() is True:

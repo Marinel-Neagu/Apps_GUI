@@ -43,8 +43,8 @@ class Application(ttk.Window):
 		self.Style.map(
 				'BoardGame.TButton',
 				foreground = [
-						('active', 'red'),
-						('disabled', 'red')
+						('active', BOARD_GAME['TEXT_COLOR_ACTIVE']),
+						('disabled', BOARD_GAME['TEXT_COLOR_DISABLED'])
 						],
 				background = [
 						('active', BOARD_GAME['HOVER_COLOR_ACTIVE']),
