@@ -5,8 +5,6 @@ from configuration import (
 	
 	# layout
 	MAIN_SIZE,
-	BOARD_SIZE,
-	BOARD_SCORE_SIZE,
 	# style
 	BOARD_GAME,
 	BOARD_SCORE,

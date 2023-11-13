@@ -10,8 +10,8 @@ BOARD_SCORE_SIZE = (9, 2)
 
 
 BOARD_GAME = {
-		'FONT'                : 110,
-		'FONT_SIZE'           : 'Arial',
+		'FONT'                : 'Arial',
+		'FONT_SIZE'           : 110,
 		'BACKGROUND'          : '#1F1F1F',
 		'HOVER_COLOR_ACTIVE'  : '#222222',
 		'HOVER_COLOR_DISABLED': '#222222',
