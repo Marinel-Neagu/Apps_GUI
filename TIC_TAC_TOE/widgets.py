@@ -1,5 +1,4 @@
 import ttkbootstrap as ttk
-from time import sleep
 from configuration import BOARD_SIZE
 
 

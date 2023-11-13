@@ -1,7 +1,17 @@
 import ttkbootstrap as ttk
 import sys, os
-from configuration import *
 from widgets import BoardGame, BoardScore
+from configuration import (
+	
+	# layout
+	MAIN_SIZE,
+	BOARD_SIZE,
+	BOARD_SCORE_SIZE,
+	# style
+	BOARD_GAME,
+	BOARD_SCORE,
+	RESET_BUTTON,
+	)
 
 # add the color title.(it works only on windows)
 try:
@@ -21,50 +31,52 @@ class Application(ttk.Window):
 		# set up the style
 		self.Style = ttk.Style()
 		self.Style.configure(
-				style = 'Board.TButton',
-				font = (BOARD_GAME_FONT, BOARD_GAME_FONT_SIZE),
-				background = '#1F1F1F',
-				bordercolor = '#121212',
-				borderthickness = 10,
-				borderwidth = 2,
-				justify = 'center',
-				relief = 'solid',
+				style = 'BoardGame.TButton',
+				font = (BOARD_GAME['FONT'], BOARD_GAME['FONT_SIZE']),
+				background = BOARD_GAME['BACKGROUND'],
+				bordercolor = BOARD_GAME['BORDER_COLOR'],
+				borderthickness = BOARD_GAME['BORDER_THICKNESS'],
+				borderwidth = BOARD_GAME['BORDER_WIDTH'],
+				justify = BOARD_GAME['JUSTIFY'],
+				relief = BOARD_GAME['RELIEF']
 				)
 		self.Style.map(
-				'Board.TButton',
+				'BoardGame.TButton',
 				foreground = [
-						('active', 'white'),
-						('disabled', 'white')
+						('active', 'red'),
+						('disabled', 'red')
 						],
 				background = [
-						('active', '#222222'),
-						('disabled', '#222222')]
-				)
-		self.Style.configure(
-				style = 'Reset.TButton',
-				font = (RESET_BUTTON_FONT, RESET_BUTTON_FONT_SIZE),
-				background = '#e74c3c',
-				bordercolor = '#222222',
-				borderthickness = 10,
-				borderwidth = 2,
-				justify = 'center',
-				relief = 'solid',
-				)
-		self.Style.map(
-				'Reset.TButton',
-				foreground = [
-						('active', ''),
-						('disabled', 'white')
-						],
-				background = [
-						('active', '#e74c3c'),
-						('disabled', '#e74c3c')]
+						('active', BOARD_GAME['HOVER_COLOR_ACTIVE']),
+						('disabled', BOARD_GAME['HOVER_COLOR_DISABLED'])
+						]
 				)
 		
 		self.Style.configure(
-				style = 'Board.TLabel',
-				font = (BOARD_SCORE_FONT, BOARD_SCORE_FONT_SIZE),
-				foreground = '#E1D9D1'
+				style = 'ResetButton.TButton',
+				font = (RESET_BUTTON['FONT'], RESET_BUTTON['SIZE']),
+				background = RESET_BUTTON['BACKGROUND'],
+				bordercolor = RESET_BUTTON['BORDER_COLOR'],
+				borderthickness = RESET_BUTTON['BORDER_THICKNESS'],
+				borderwidth = RESET_BUTTON['BORDER_WIDTH'],
+				justify = RESET_BUTTON['JUSTIFY'],
+				relief = RESET_BUTTON['RELIEF']
+				)
+		self.Style.map(
+				'ResetButton.TButton',
+				foreground = [
+						('active', RESET_BUTTON['TEXT_COLOR_ACTIVE']),
+						('disabled', RESET_BUTTON['TEXT_COLOR_DISABLED'])
+						],
+				background = [
+						('active', RESET_BUTTON['HOVER_COLOR_ACTIVE']),
+						('disabled', RESET_BUTTON['HOVER_COLOR_DISABLED'])]
+				)
+		
+		self.Style.configure(
+				style = 'BoardScore.TLabel',
+				font = (BOARD_SCORE['FONT'], BOARD_SCORE['FONT_SIZE']),
+				foreground = BOARD_SCORE['TEXT_COLOR']
 				
 				)
 		# 	set player data
@@ -73,15 +85,15 @@ class Application(ttk.Window):
 		self.player_2 = ttk.IntVar(value = 0)
 		BoardGame(
 				parent = self,
-				style = 'Board.TButton',
+				style = 'BoardGame.TButton',
 				player_1 = self.player_1,
 				tie = self.tie_score,
 				player_2 = self.player_2,
 				)
 		BoardScore(
 				parent = self,
-				style = 'Board.TLabel',
-				style_button = 'Reset.TButton',
+				style = 'BoardScore.TLabel',
+				style_button = 'ResetButton.TButton',
 				player_1 = self.player_1,
 				tie = self.tie_score,
 				player_2 = self.player_2,
@@ -92,6 +104,7 @@ class Application(ttk.Window):
 	
 	def clean_board(self):
 		self.player_1.set(0)
+		
 		self.player_2.set(0)
 		self.tie_score.set(0)
 	
