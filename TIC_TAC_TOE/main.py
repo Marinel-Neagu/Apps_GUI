@@ -29,6 +29,10 @@ class Application(ttk.Window):
         # set up the style
         self.Style = ttk.Style()
         self.Style.configure(
+                'BoardScore.TFrame',
+                background = 'red'
+                )
+        self.Style.configure(
                 style = 'BoardGame.TButton',
                 font = (BOARD_GAME['FONT'], BOARD_GAME['FONT_SIZE']),
                 background = BOARD_GAME['BACKGROUND'],
@@ -74,23 +78,27 @@ class Application(ttk.Window):
         self.Style.configure(
                 style = 'BoardScore.TLabel',
                 font = (BOARD_SCORE['FONT'], BOARD_SCORE['FONT_SIZE']),
-                foreground = BOARD_SCORE['TEXT_COLOR']
-                
+                foreground = BOARD_SCORE['TEXT_COLOR'],
+                background = BOARD_SCORE['BACKGROUND']
                 )
         # 	set player data
         self.player_1 = ttk.IntVar(value = 0)
         self.tie_score = ttk.IntVar(value = 0)
         self.player_2 = ttk.IntVar(value = 0)
+        
+        # set widgets
         BoardGame(
                 parent = self,
-                style = 'BoardGame.TButton',
+                style_cells = 'BoardGame.TButton',
+                style_frame = 'BoardGame.TFrame',
                 player_1 = self.player_1,
                 tie = self.tie_score,
                 player_2 = self.player_2,
                 )
         BoardScore(
                 parent = self,
-                style = 'BoardScore.TLabel',
+                style_labels = 'BoardScore.TButton',
+                style_frame = 'BoardScore.TFrame',
                 style_button = 'ResetButton.TButton',
                 player_1 = self.player_1,
                 tie = self.tie_score,

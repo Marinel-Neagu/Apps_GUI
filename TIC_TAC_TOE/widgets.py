@@ -3,8 +3,10 @@ from configuration import BOARD_SIZE
 
 
 class BoardGame(ttk.Frame):
-    def __init__(self, parent, style, player_1, tie, player_2, ):
-        super().__init__(master = parent)
+    def __init__(
+            self, parent, style_cells, style_frame,
+            player_1, tie, player_2, ):
+        super().__init__(master = parent, style = style_frame)
         # set data
         self.player_1 = player_1
         self.tie_score = tie
@@ -34,7 +36,7 @@ class BoardGame(ttk.Frame):
                         command = lambda row = rows, column = cols: self.next_turn(row, column),
                         row = rows,
                         column = cols,
-                        style = style,
+                        style_cell = style_cells,
                         columnspan = 1,
                         rowspan = 1,
                         )
@@ -117,12 +119,14 @@ class BoardScore(ttk.Frame):
     def __init__(
             self,
             parent,
-            style,
+            style_labels,
+            style_frame,
             player_1,
             tie,
             player_2,
             function,
             style_button,
+            
             ):
         super().__init__(master = parent)
         # data score
@@ -138,11 +142,11 @@ class BoardScore(ttk.Frame):
         self.player_1 = Labels(
                 parent = self,
                 textvariable = None,
-                text = 'Player 1(x)',
+                text = 'Player X',
                 row = 0,
                 column = 0,
                 columnspan = 3,
-                style = style,
+                style = style_labels,
                 )
         self.tie = Labels(
                 parent = self,
@@ -151,17 +155,17 @@ class BoardScore(ttk.Frame):
                 row = 0,
                 column = 4,
                 columnspan = 2,
-                style = style,
+                style = style_labels,
                 )
         
         self.player_2 = Labels(
                 parent = self,
                 textvariable = None,
-                text = 'Player 2(o)',
+                text = 'Player O',
                 row = 0,
                 column = 6,
                 columnspan = 3,
-                style = style,
+                style = style_labels,
                 )
         self.reset_button = Button(
                 parent = self,
@@ -182,7 +186,7 @@ class BoardScore(ttk.Frame):
                 row = 1,
                 column = 0,
                 columnspan = 3,
-                style = style,
+                style = style_labels,
                 
                 )
         
@@ -193,7 +197,7 @@ class BoardScore(ttk.Frame):
                 row = 1,
                 column = 4,
                 columnspan = 2,
-                style = style,
+                style = style_labels,
                 )
         self.label_player_2_score = Labels(
                 parent = self,
@@ -202,19 +206,22 @@ class BoardScore(ttk.Frame):
                 row = 1,
                 column = 6,
                 columnspan = 3,
-                style = style,
+                style = style_labels,
                 )
 
 
 class Button(ttk.Button):
     
-    def __init__(self, parent, text, command, row, column, columnspan, rowspan, style):
+    def __init__(
+            self, parent, text, command,
+            row, column, columnspan, rowspan, style_cell,
+            ):
         # set data
         super().__init__(
                 master = parent,
                 text = text,
                 command = command,
-                style = style,
+                style = style_cell,
                 )
         
         # set layout
