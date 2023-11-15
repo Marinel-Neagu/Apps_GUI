@@ -1,5 +1,5 @@
 import ttkbootstrap as ttk
-from configuration import BOARD_SIZE
+from configuration import BOARD_SIZE, BOARD_SCORE, BOARD_GAME
 
 
 class BoardGame(ttk.Frame):
@@ -36,7 +36,7 @@ class BoardGame(ttk.Frame):
                         command = lambda row = rows, column = cols: self.next_turn(row, column),
                         row = rows,
                         column = cols,
-                        style_cell = style_cells,
+                        style_button = style_cells,
                         columnspan = 1,
                         rowspan = 1,
                         )
@@ -128,7 +128,7 @@ class BoardScore(ttk.Frame):
             style_button,
             
             ):
-        super().__init__(master = parent)
+        super().__init__(master = parent, style = style_frame)
         # data score
         self.player_1_score = player_1
         self.player_2_score = player_2
@@ -139,18 +139,16 @@ class BoardScore(ttk.Frame):
         self.pack(fill = 'both', side = 'bottom')
         
         # show players name
-        self.player_1 = Labels(
+        self.player_1 = Label(
                 parent = self,
-                textvariable = None,
                 text = 'Player X',
                 row = 0,
                 column = 0,
                 columnspan = 3,
                 style = style_labels,
                 )
-        self.tie = Labels(
+        self.tie = Label(
                 parent = self,
-                textvariable = None,
                 text = 'Tie ',
                 row = 0,
                 column = 4,
@@ -158,9 +156,8 @@ class BoardScore(ttk.Frame):
                 style = style_labels,
                 )
         
-        self.player_2 = Labels(
+        self.player_2 = Label(
                 parent = self,
-                textvariable = None,
                 text = 'Player O',
                 row = 0,
                 column = 6,
@@ -175,14 +172,13 @@ class BoardScore(ttk.Frame):
                 column = 9,
                 columnspan = 3,
                 rowspan = 2,
-                style = style_button,
+                style_button = style_button,
                 
                 )
         # show score
-        self.label_player_1_score = Labels(
+        self.label_player_1_score = LabelScore(
                 parent = self,
                 textvariable = self.player_1_score,
-                text = '',
                 row = 1,
                 column = 0,
                 columnspan = 3,
@@ -190,19 +186,17 @@ class BoardScore(ttk.Frame):
                 
                 )
         
-        self.label_tie_score = Labels(
+        self.label_tie_score = LabelScore(
                 parent = self,
                 textvariable = self.tie_score,
-                text = '',
                 row = 1,
                 column = 4,
                 columnspan = 2,
                 style = style_labels,
                 )
-        self.label_player_2_score = Labels(
+        self.label_player_2_score = LabelScore(
                 parent = self,
                 textvariable = self.player_2_score,
-                text = '',
                 row = 1,
                 column = 6,
                 columnspan = 3,
@@ -214,14 +208,14 @@ class Button(ttk.Button):
     
     def __init__(
             self, parent, text, command,
-            row, column, columnspan, rowspan, style_cell,
+            row, column, columnspan, rowspan, style_button,
             ):
         # set data
         super().__init__(
                 master = parent,
                 text = text,
                 command = command,
-                style = style_cell,
+                style = style_button,
                 )
         
         # set layout
@@ -231,15 +225,16 @@ class Button(ttk.Button):
                 sticky = 'news',
                 columnspan = columnspan,
                 rowspan = rowspan,
+                padx = 5,
+                pady = 5
                 )
 
 
-class Labels(ttk.Label):
-    def __init__(self, parent, text, textvariable, row, column, columnspan, style):
+class Label(ttk.Label):
+    def __init__(self, parent, text, row, column, columnspan, style, ):
         super().__init__(
                 master = parent,
                 text = text,
-                textvariable = textvariable,
                 style = style,
                 anchor = 'center',
                 )
@@ -248,7 +243,25 @@ class Labels(ttk.Label):
                 row = row,
                 column = column,
                 sticky = 'news',
+                columnspan = columnspan,
                 padx = 10,
                 pady = 10,
-                columnspan = columnspan
+                )
+
+
+class LabelScore(ttk.Label):
+    def __init__(self, parent, textvariable, row, column, columnspan, style):
+        super().__init__(
+                master = parent,
+                textvariable = textvariable,
+                style = style,
+                anchor = 'center',
+                )
+        self.grid(
+                row = row,
+                column = column,
+                sticky = 'news',
+                columnspan = columnspan,
+                padx = 10,
+                pady = 10
                 )

@@ -22,6 +22,8 @@ BOARD_GAME = {
         'BORDER_WIDTH': 2,
         'JUSTIFY': 'center',
         'RELIEF': 'solid',
+        'PADX': 10,
+        'PADY': 10,
         
         }
 BOARD_SCORE = {
@@ -30,8 +32,43 @@ BOARD_SCORE = {
         'FONT_SIZE': 34,
         'TEXT_COLOR': '#E1D9D1',
         'BACKGROUND_LABEL': '#303030',
-        'BACKGROUND': '#121212'
-        
+        'BACKGROUND': '#121212',
+        'PLAYER_1': {
+                'row': 1,
+                'col': 1,
+                'columnspan': 3,
+                },
+        'PLAYER_2': {
+                'row': 0,
+                'col': 6,
+                'columnspan': 3,
+                },
+        'TIE': {
+                'row': 0,
+                'col': 4,
+                'columnspan': 2,
+                },
+        'RESET_BUTTON': {
+                'row': 0,
+                'col': 9,
+                'columnspan': 3,
+                'rowspan': 2,
+                },
+        'PLAYER_1_SCORE': {
+                'row': 1,
+                'column': 0,
+                'columnspan': 3,
+                },
+        'TIE_SCORE': {
+                'row': 1,
+                'column': 4,
+                'columnspan': 2,
+                },
+        'PLAYER_2_SCORE': {
+                'row': 1,
+                'column': 6,
+                'columnspan': 3,
+                },
         }
 RESET_BUTTON = {
         'FONT': 'Helvetica',
@@ -46,4 +83,6 @@ RESET_BUTTON = {
         'BORDER_WIDTH': 2,
         'JUSTIFY': 'center',
         'RELIEF': 'solid',
+        'PADX': 10,
+        'PADY': 10,
         }

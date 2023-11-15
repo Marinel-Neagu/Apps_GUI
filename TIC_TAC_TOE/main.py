@@ -30,7 +30,11 @@ class Application(ttk.Window):
         self.Style = ttk.Style()
         self.Style.configure(
                 'BoardScore.TFrame',
-                background = 'red'
+                background = BOARD_SCORE['BACKGROUND']
+                )
+        self.Style.configure(
+                'BoardGame.TFrame',
+                background = BOARD_GAME['BACKGROUND']
                 )
         self.Style.configure(
                 style = 'BoardGame.TButton',
@@ -97,7 +101,7 @@ class Application(ttk.Window):
                 )
         BoardScore(
                 parent = self,
-                style_labels = 'BoardScore.TButton',
+                style_labels = 'BoardScore.TLabel',
                 style_frame = 'BoardScore.TFrame',
                 style_button = 'ResetButton.TButton',
                 player_1 = self.player_1,
