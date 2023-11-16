@@ -91,7 +91,7 @@ class Application(ttk.Window):
         self.player_2 = ttk.IntVar(value = 0)
         
         # set widgets
-        BoardGame(
+        self.board_game = BoardGame(
                 parent = self,
                 style_cells = 'BoardGame.TButton',
                 style_frame = 'BoardGame.TFrame',
@@ -99,7 +99,7 @@ class Application(ttk.Window):
                 tie = self.tie_score,
                 player_2 = self.player_2,
                 )
-        BoardScore(
+        self.board_score = BoardScore(
                 parent = self,
                 style_labels = 'BoardScore.TLabel',
                 style_frame = 'BoardScore.TFrame',
@@ -114,10 +114,10 @@ class Application(ttk.Window):
     
     def clean_board(self):
         self.player_1.set(0)
-        
         self.player_2.set(0)
         self.tie_score.set(0)
-    
+        self.board_game.clean_board()
+
     def set_emtpy_icon(self):
         try:
             path_image = self.path_resource('image/empty.ico')

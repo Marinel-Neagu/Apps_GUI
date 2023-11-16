@@ -19,7 +19,7 @@ class BoardGame(ttk.Frame):
         self.board_position = [
                 [0, 0, 0],
                 [0, 0, 0],
-                [0, 0, 0]
+                [0, 0, 0],
                 ]
         # layout
         
@@ -33,7 +33,7 @@ class BoardGame(ttk.Frame):
                 self.board_position[rows][cols] = Button(
                         parent = self,
                         text = '',
-                        command = lambda row = rows, column = cols: self.next_turn(row, column),
+                        command = lambda row = rows, column = cols: self.player_move(row, column),
                         row = rows,
                         column = cols,
                         style_button = style_cells,
@@ -41,76 +41,127 @@ class BoardGame(ttk.Frame):
                         rowspan = 1,
                         )
     
-    def next_turn(self, row, column):
-        
-        if self.board_position[row][column]['text'] == "" and self.check_winner() is False:
-            
-            if self.player == self.players_list[0]:
-                
-                self.board_position[row][column]['text'] = self.player
-                
-                if self.check_winner() is False:
-                    self.player = self.players_list[1]
-                
-                elif self.check_winner() is True:
-                    self.player_1.set(self.player_1.get() + 1)
-                
-                elif self.check_winner() == "Tie":
-                    self.tie_score.set(self.tie_score.get() + 1)
-            
-            else:
-                self.board_position[row][column]['text'] = self.player
-                if self.check_winner() is False:
-                    self.player = self.players_list[0]
-                elif self.check_winner() is True:
-                    self.player_2.set(self.player_2.get() + 1)
-                
-                elif self.check_winner() == "Tie":
-                    self.tie_score.set(self.tie_score.get() + 1)
+    def player_move(self, row: int, column: int) -> None:
+        """
+        It updates the board when the player click the cells and is the hole logic for the board
+
+        """
+        if self.board_position[row][column]['text'] == "" and self.check_win() is False:
+            self.round(row = row, column = column)
         else:
-            
-            if self.empty_spaces() is False or self.check_winner() is True:
+            if self.empty_space() or self.check_win():
                 self.clean_board()
     
-    def check_winner(self):
+    def round(self, row: int, column: int) -> None:
+        """
+         It check the round if it is X or O round and
+        check the round if is done and update the score
+        
+        """
+        
+        # The first move is always for the X player
+        
+        if self.player == self.players_list[0]:
+            self.round_x(row = row, column = column)
+        else:
+            self.round_o(row = row, column = column)
+    
+    def round_x(self, row: int, column: int) -> None:
+        """
+        Update the board and the score for the X  player
+        
+        """
+        self.board_position[row][column]['text'] = self.player
+        if self.check_win() is False:
+            self.player = self.players_list[1]
+        
+        elif self.check_win() is True:
+            
+            self.player_1.set(self.player_1.get() + 1)
+        
+        elif self.check_win() == "Tie":
+            
+            self.tie_score.set(self.tie_score.get() + 1)
+    
+    def round_o(self, row: int, column: int) -> None:
+        """
+        
+        Update the board and the score for the O  player
+
+        """
+        self.board_position[row][column]['text'] = self.player
+        
+        if self.check_win() is False:
+            
+            self.player = self.players_list[0]
+        
+        elif self.check_win() is True:
+            
+            self.player_2.set(self.player_2.get() + 1)
+        
+        elif self.check_win() == "Tie":
+            
+            self.tie_score.set(self.tie_score.get() + 1)
+    
+    def check_win(self):
         # Check for winning conditions
-        for row in range(3):
-            if self.board_position[row][0]['text'] == self.board_position[row][1]['text'] == \
-                    self.board_position[row][2]['text'] != "":
-                return True
-        
-        for column in range(3):
-            if self.board_position[0][column]['text'] == self.board_position[1][column]['text'] == \
-                    self.board_position[2][column]['text'] != "":
-                return True
-        
-        if self.board_position[0][0]['text'] == self.board_position[1][1]['text'] == \
-                self.board_position[2][2]['text'] != "":
+        if self.row_check() or self.column_check():
             return True
         
-        elif self.board_position[0][2]['text'] == self.board_position[1][1]['text'] == \
-                self.board_position[2][0]['text'] != "":
+        elif self.check_first_diagonal() or self.check_second_diagonal():
             return True
-        elif self.empty_spaces() is False:
+        
+        elif self.empty_space():
             return 'Tie'
         else:
             return False
     
-    def empty_spaces(self):
+    def column_check(self):
+        for column in range(BOARD_SIZE[1]):
+            
+            if self.board_position[0][column]['text'] == self.board_position[1][column]['text'] == \
+                    self.board_position[2][column]['text'] != "":
+                
+                return True
+    
+    def row_check(self):
+        for row in range(BOARD_SIZE[0]):
+            
+            if self.board_position[row][0]['text'] == self.board_position[row][1]['text'] == \
+                    self.board_position[row][2]['text'] != "":
+                
+                return True
+    
+    def check_first_diagonal(self):
+        
+        if self.board_position[0][0]['text'] == self.board_position[1][1]['text'] == \
+                self.board_position[2][2]['text'] != "":
+            
+            return True
+    
+    def check_second_diagonal(self):
+        
+        if self.board_position[0][2]['text'] == self.board_position[1][1]['text'] == \
+                self.board_position[2][0]['text'] != "":
+            
+            return True
+    
+    def empty_space(self):
+        
         spaces = 9
-        for row in range(3):
-            for column in range(3):
+        
+        for row in range(BOARD_SIZE[0]):
+            for column in range(BOARD_SIZE[1]):
+                
                 if self.board_position[row][column]['text'] != '':
                     spaces -= 1
-        if spaces == 0:
-            return False
-        else:
-            return True
+        
+        return True if spaces == 0 else False
     
     def clean_board(self):
         # Clear the button texts and backgrounds
-        for row in range(3):
-            for column in range(3):
+        for row in range(BOARD_SIZE[0]):
+            for column in range(BOARD_SIZE[1]):
                 self.board_position[row][column]['text'] = ''
 
 
