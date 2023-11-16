@@ -1,3 +1,5 @@
+from tkinter import IntVar
+
 import ttkbootstrap as ttk
 import sys, os
 from widgets import BoardGame, BoardScore
@@ -18,22 +20,41 @@ except Exception:
     pass
 
 
-class Application(ttk.Window):
+def path_resource(relative_path: str) -> str:
+    """
+    it take the relative path and return the absolute path of the file from your system, is used for making the
+    app into a exe file for window
+
+    """
+    try:
+        base_path: str = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath('.')
+    return os.path.join(base_path, relative_path)
+
+
+class TicTacToe(ttk.Window):
+    player_1: IntVar
+    tie_score: IntVar
+    player_2: IntVar
+    
     def __init__(self):
-        super().__init__(themename = 'darkly')
+        super().__init__()
         self.bind('<Alt-s>', lambda event: self.destroy())
         self.title('')
         self.set_emtpy_icon()
         self.set_window_size(width = MAIN_SIZE[0], height = MAIN_SIZE[1])
         
         # set up the style
-        self.Style = ttk.Style()
+        self.Style = ttk.Style(theme = 'darkly')
+        
+        # style for the score/ board_score
         self.Style.configure(
-                'BoardScore.TFrame',
+                style = 'BoardScore.TFrame',
                 background = BOARD_SCORE['BACKGROUND']
                 )
         self.Style.configure(
-                'BoardGame.TFrame',
+                style = 'BoardGame.TFrame',
                 background = BOARD_GAME['BACKGROUND']
                 )
         self.Style.configure(
@@ -47,7 +68,7 @@ class Application(ttk.Window):
                 relief = BOARD_GAME['RELIEF']
                 )
         self.Style.map(
-                'BoardGame.TButton',
+                style = 'BoardGame.TButton',
                 foreground = [
                         ('active', BOARD_GAME['TEXT_COLOR_ACTIVE']),
                         ('disabled', BOARD_GAME['TEXT_COLOR_DISABLED'])
@@ -69,7 +90,7 @@ class Application(ttk.Window):
                 relief = RESET_BUTTON['RELIEF']
                 )
         self.Style.map(
-                'ResetButton.TButton',
+                style = 'ResetButton.TButton',
                 foreground = [
                         ('active', RESET_BUTTON['TEXT_COLOR_ACTIVE']),
                         ('disabled', RESET_BUTTON['TEXT_COLOR_DISABLED'])
@@ -110,45 +131,49 @@ class Application(ttk.Window):
                 function = self.clean_board
                 )
         
+        # run
         self.mainloop()
     
     def clean_board(self):
+        """
+        It clean the board and reset the score
+        """
+        self.board_game.clean_board()
         self.player_1.set(0)
         self.player_2.set(0)
         self.tie_score.set(0)
-        self.board_game.clean_board()
+    
+    def set_emtpy_icon(self) -> None:
+        """
+        It sets the icon to  one empty from the title bar
 
-    def set_emtpy_icon(self):
+        """
         try:
-            path_image = self.path_resource('image/empty.ico')
+            path_image: str = path_resource('image/empty.ico')
             self.iconbitmap(path_image)
         except Exception:
             pass
     
-    def path_resource(self, relative_path):
-        try:
-            base_path = sys._MEIPASS
-        except Exception:
-            base_path = os.path.abspath('.')
-        return os.path.join(base_path, relative_path)
-    
-    def set_window_size(self, width, height):
-        left = int(self.winfo_screenwidth() / 2 - width / 2)
-        top = int(self.winfo_screenheight() / 2 - height / 2)
+    def set_window_size(self, width: int, height: int) -> None:
+        """
+        It adjust the window size to be in the center of the screen
+        """
+        left: int = int(self.winfo_screenwidth() / 2 - width / 2)
+        top: int = int(self.winfo_screenheight() / 2 - height / 2)
         self.geometry(f'{width}x{height}+{left}+{top}')
     
-    def set_title_bar_color(self):
+    def set_title_bar_color(self) -> None:
         """
     It works only on Windows, not on GNU/Linux and macOS.
         """
         try:
-            HWND = windll.user32.GetParent(self.winfo_id())
-            DWMWA_ATTRIBUTE = 35
-            TITLE_BAR_COLOR = 0x00000000
+            HWND: object = windll.user32.GetParent(self.winfo_id())
+            DWMWA_ATTRIBUTE: int = 35
+            TITLE_BAR_COLOR: int = 0x00000000
             windll.dwmapi.DwmSetWindowAttribute(HWND, DWMWA_ATTRIBUTE, byref(c_int(TITLE_BAR_COLOR)), sizeof(c_int))
         except Exception:
             pass
 
 
 if __name__ == '__main__':
-    Application()
+    TicTacToe()

@@ -1,8 +1,9 @@
 import ttkbootstrap as ttk
-from configuration import BOARD_SIZE, BOARD_SCORE, BOARD_GAME
+from configuration import BOARD_SIZE
 
 
 class BoardGame(ttk.Frame):
+    
     def __init__(
             self, parent, style_cells, style_frame,
             player_1, tie, player_2, ):
@@ -26,8 +27,8 @@ class BoardGame(ttk.Frame):
         self.columnconfigure(list(range(BOARD_SIZE[0])), weight = 1, uniform = 'a')
         self.rowconfigure(list(range(BOARD_SIZE[1])), weight = 1, uniform = 'a')
         self.pack(expand = True, fill = 'both', side = 'top')
-        # widgets
         
+        #  add the buttons
         for rows in range(BOARD_SIZE[0]):
             for cols in range(BOARD_SIZE[1]):
                 self.board_position[rows][cols] = Button(

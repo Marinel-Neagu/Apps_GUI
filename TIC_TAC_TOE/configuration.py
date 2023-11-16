@@ -1,6 +1,6 @@
 # size of the app
 
-MAIN_SIZE = (900, 900)
+MAIN_SIZE = (800, 900)
 
 # Layout BoardScore and BoardGame.
 BOARD_SIZE = (3, 3)
