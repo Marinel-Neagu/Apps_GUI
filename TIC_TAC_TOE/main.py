@@ -1,7 +1,8 @@
-from tkinter import IntVar
-
+import os
+import sys
 import ttkbootstrap as ttk
-import sys, os
+
+from tkinter import IntVar
 from widgets import BoardGame, BoardScore
 from configuration import (
     
@@ -35,8 +36,8 @@ def path_resource(relative_path: str) -> str:
 
 class TicTacToe(ttk.Window):
     player_1: IntVar
-    tie_score: IntVar
     player_2: IntVar
+    tie_score: IntVar
     
     def __init__(self):
         super().__init__()
@@ -50,22 +51,22 @@ class TicTacToe(ttk.Window):
         
         # style for the score/ board_score
         self.Style.configure(
+                background = BOARD_SCORE['BACKGROUND'],
                 style = 'BoardScore.TFrame',
-                background = BOARD_SCORE['BACKGROUND']
                 )
         self.Style.configure(
+                background = BOARD_GAME['BACKGROUND'],
                 style = 'BoardGame.TFrame',
-                background = BOARD_GAME['BACKGROUND']
                 )
         self.Style.configure(
-                style = 'BoardGame.TButton',
-                font = (BOARD_GAME['FONT'], BOARD_GAME['FONT_SIZE']),
                 background = BOARD_GAME['BACKGROUND'],
                 bordercolor = BOARD_GAME['BORDER_COLOR'],
                 borderthickness = BOARD_GAME['BORDER_THICKNESS'],
                 borderwidth = BOARD_GAME['BORDER_WIDTH'],
+                font = (BOARD_GAME['FONT'], BOARD_GAME['FONT_SIZE']),
                 justify = BOARD_GAME['JUSTIFY'],
-                relief = BOARD_GAME['RELIEF']
+                relief = BOARD_GAME['RELIEF'],
+                style = 'BoardGame.TButton',
                 )
         self.Style.map(
                 style = 'BoardGame.TButton',
@@ -80,14 +81,14 @@ class TicTacToe(ttk.Window):
                 )
         
         self.Style.configure(
-                style = 'ResetButton.TButton',
-                font = (RESET_BUTTON['FONT'], RESET_BUTTON['SIZE']),
                 background = RESET_BUTTON['BACKGROUND'],
                 bordercolor = RESET_BUTTON['BORDER_COLOR'],
                 borderthickness = RESET_BUTTON['BORDER_THICKNESS'],
                 borderwidth = RESET_BUTTON['BORDER_WIDTH'],
+                font = (RESET_BUTTON['FONT'], RESET_BUTTON['SIZE']),
                 justify = RESET_BUTTON['JUSTIFY'],
-                relief = RESET_BUTTON['RELIEF']
+                relief = RESET_BUTTON['RELIEF'],
+                style = 'ResetButton.TButton',
                 )
         self.Style.map(
                 style = 'ResetButton.TButton',
@@ -101,15 +102,15 @@ class TicTacToe(ttk.Window):
                 )
         
         self.Style.configure(
-                style = 'BoardScore.TLabel',
+                background = BOARD_SCORE['BACKGROUND'],
                 font = (BOARD_SCORE['FONT'], BOARD_SCORE['FONT_SIZE']),
                 foreground = BOARD_SCORE['TEXT_COLOR'],
-                background = BOARD_SCORE['BACKGROUND']
+                style = 'BoardScore.TLabel',
                 )
         # 	set player data
         self.player_1 = ttk.IntVar(value = 0)
-        self.tie_score = ttk.IntVar(value = 0)
         self.player_2 = ttk.IntVar(value = 0)
+        self.tie_score = ttk.IntVar(value = 0)
         
         # set widgets
         self.board_game = BoardGame(
@@ -169,7 +170,7 @@ class TicTacToe(ttk.Window):
         try:
             HWND: object = windll.user32.GetParent(self.winfo_id())
             DWMWA_ATTRIBUTE: int = 35
-            TITLE_BAR_COLOR: int = 0x00000000
+            TITLE_BAR_COLOR: int = 0x00333388
             windll.dwmapi.DwmSetWindowAttribute(HWND, DWMWA_ATTRIBUTE, byref(c_int(TITLE_BAR_COLOR)), sizeof(c_int))
         except Exception:
             pass

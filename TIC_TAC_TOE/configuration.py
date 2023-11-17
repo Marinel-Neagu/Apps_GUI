@@ -10,29 +10,28 @@ BOARD_SCORE_SIZE = (9, 2)
 
 
 BOARD_GAME = {
-        'FONT': 'Arial',
-        'FONT_SIZE': 110,
         'BACKGROUND': '#1F1F1F',
-        'HOVER_COLOR_ACTIVE': '#222222',
-        'HOVER_COLOR_DISABLED': '#222222',
-        'TEXT_COLOR_ACTIVE': '#E1D9D1',
-        'TEXT_COLOR_DISABLED': '#E1D9D1',
         'BORDER_COLOR': '#121212',
         'BORDER_THICKNESS': 10,
         'BORDER_WIDTH': 2,
+        'FONT': 'Arial',
+        'FONT_SIZE': 110,
+        'HOVER_COLOR_ACTIVE': '#222222',
+        'HOVER_COLOR_DISABLED': '#222222',
         'JUSTIFY': 'center',
-        'RELIEF': 'solid',
         'PADX': 10,
         'PADY': 10,
-        
+        'RELIEF': 'solid',
+        'TEXT_COLOR_ACTIVE': '#E1D9D1',
+        'TEXT_COLOR_DISABLED': '#E1D9D1',
         }
 BOARD_SCORE = {
         
+        'BACKGROUND': '#121212',
+        'BACKGROUND_LABEL': '#303030',
         'FONT': 'Helvetica',
         'FONT_SIZE': 34,
         'TEXT_COLOR': '#E1D9D1',
-        'BACKGROUND_LABEL': '#303030',
-        'BACKGROUND': '#121212',
         'PLAYER_1': {
                 'row': 1,
                 'col': 1,
@@ -71,18 +70,18 @@ BOARD_SCORE = {
                 },
         }
 RESET_BUTTON = {
-        'FONT': 'Helvetica',
-        'SIZE': 34,
         'BACKGROUND': '#E74C3C',
-        'HOVER_COLOR_ACTIVE': '#D95092',
-        'HOVER_COLOR_DISABLED': '#E74C3C',
-        'TEXT_COLOR_ACTIVE': '#E1D9D1',
-        'TEXT_COLOR_DISABLED': '#E1D9D1',
         'BORDER_COLOR': '#222222',
         'BORDER_THICKNESS': 10,
         'BORDER_WIDTH': 2,
+        'FONT': 'Helvetica',
+        'HOVER_COLOR_ACTIVE': '#D95092',
+        'HOVER_COLOR_DISABLED': '#E74C3C',
         'JUSTIFY': 'center',
-        'RELIEF': 'solid',
         'PADX': 10,
         'PADY': 10,
+        'RELIEF': 'solid',
+        'SIZE': 34,
+        'TEXT_COLOR_ACTIVE': '#E1D9D1',
+        'TEXT_COLOR_DISABLED': '#E1D9D1',
         }

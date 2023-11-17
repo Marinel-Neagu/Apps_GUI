@@ -5,25 +5,32 @@ from configuration import BOARD_SIZE
 class BoardGame(ttk.Frame):
     
     def __init__(
-            self, parent, style_cells, style_frame,
-            player_1, tie, player_2, ):
+            self, parent, player_1, player_2,
+            style_cells, style_frame, tie,
+            ):
         super().__init__(master = parent, style = style_frame)
         # set data
-        self.player_1 = player_1
-        self.tie_score = tie
-        self.player_2 = player_2
-        self.x_score = 0
+        
+        # set score
         self.o_score = 0
         self.t_score = 0
-        self.players_list = ['X', 'O']
-        self.player = self.players_list[0]
+        self.x_score = 0
+        
+        # set player
+        self.player_1 = player_1
+        self.player_2 = player_2
+        self.tie_score = tie
+        
+        # set board, player list and the player
         self.board_position = [
                 [0, 0, 0],
                 [0, 0, 0],
                 [0, 0, 0],
                 ]
-        # layout
+        self.players_list = ['X', 'O']
+        self.player = self.players_list[0]
         
+        # layout
         self.columnconfigure(list(range(BOARD_SIZE[0])), weight = 1, uniform = 'a')
         self.rowconfigure(list(range(BOARD_SIZE[1])), weight = 1, uniform = 'a')
         self.pack(expand = True, fill = 'both', side = 'top')
@@ -33,13 +40,13 @@ class BoardGame(ttk.Frame):
             for cols in range(BOARD_SIZE[1]):
                 self.board_position[rows][cols] = Button(
                         parent = self,
-                        text = '',
+                        column = cols,
+                        columnspan = 1,
                         command = lambda row = rows, column = cols: self.player_move(row, column),
                         row = rows,
-                        column = cols,
-                        style_button = style_cells,
-                        columnspan = 1,
                         rowspan = 1,
+                        style_button = style_cells,
+                        text = '',
                         )
     
     def player_move(self, row: int, column: int) -> None:
@@ -50,7 +57,7 @@ class BoardGame(ttk.Frame):
         if self.board_position[row][column]['text'] == "" and self.check_win() is False:
             self.round(row = row, column = column)
         else:
-            if self.empty_space() or self.check_win():
+            if self.empty_space or self.check_win():
                 self.clean_board()
     
     def round(self, row: int, column: int) -> None:
@@ -150,7 +157,6 @@ class BoardGame(ttk.Frame):
     def empty_space(self):
         
         spaces = 9
-        
         for row in range(BOARD_SIZE[0]):
             for column in range(BOARD_SIZE[1]):
                 
