@@ -31,10 +31,6 @@ pip install pygame
         Pull request are wellcome, if you have any advice I am open. If you know to add the AI boot, I will very happy 
     to add to my code
 
-## Visuals
-
-    ![alt text](https://github.com/Marinel-Neagu/Apps_GUI/blob/main/TIC_TAC_TOE/Tic_Tac_Toe.png)
-
 ## License
 
 [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
