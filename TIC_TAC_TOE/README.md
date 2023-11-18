@@ -1,4 +1,3 @@
-
 # Tic Tac Toe with ttkbootstrap and pygame
 
         Simple and good looking tic tac toe game including sound. The game is only for 2 player, sadly I am not ready 
@@ -33,8 +32,8 @@ pip install pygame
     to add to my code
 
 ## Visuals
-    ![alt text](http://url/to/img.png)
-    
+
+    ![alt text](https://github.com/Marinel-Neagu/Apps_GUI/blob/main/TIC_TAC_TOE/Tic_Tac_Toe.png)
 
 ## License
 
