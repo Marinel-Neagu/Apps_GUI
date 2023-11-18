@@ -1,22 +1,34 @@
-# Mordern Looking Calculator
+# Tic Tac Toe with ttkbootstrap and pygame
 
- The calculator has a them like IOS calculator.And is made in Tkinter with [ttkboostrap](https://ttkbootstrap.readthedocs.io/en/latest/).The app it will look different on windows and Linux/Macos.
+        Simple and good looking tic tac toe game including sound. The game is only for 2 player, sadly I am not ready 
+    enough to add the AI boot (I don't want to add the random boot :) )
 
+## Description
+
+        The game is made only in ttkboostrap and  some little pygame for the sound. You can customize this game as you 
+    want. The main thing you can do is to change the color and many things. To see them check the OPTION part.
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install [ttkboostrap](https://ttkbootstrap.readthedocs.io/en/latest/) and pillow 9.5.0.
+        Use the package manager [pip](https://pip.pypa.io/en/stable/) to
+    install [ttkboostrap](https://ttkbootstrap.readthedocs.io/en/latest/)
 
 ```bash
 pip install ttkboostrap
 ```
+
 ```bash
-pip install pillow==9.5.0
+pip install pygame 
 ```
+## Option
+
+        The configuration.py file is made in that the information is stored in dictionary/hash-map or like json file.
+    In this way is very easy to change the color, the font and kind of everthing you want :/ (so be carefull)
 
 ## Contributing
 
-Any advice are wellcome.
+        Pull request are wellcome, if you have any advice I am open. If you know to add the AI boot, I will very happy 
+    to add to my code
 
 ## License
 

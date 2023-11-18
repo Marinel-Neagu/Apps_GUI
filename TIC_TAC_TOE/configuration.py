@@ -2,6 +2,9 @@
 
 MAIN_SIZE: tuple[int, int] = (800, 900)
 
+# Music
+MUSIC_PATH: str = 'media/tictacktoe_sound.mp3'
+
 # Layout BoardScore and BoardGame.
 BOARD_SIZE: tuple[int, int] = (3, 3)
 BOARD_ROW: list[int] = list(range(BOARD_SIZE[0]))
@@ -31,6 +34,8 @@ BOARD_GAME = {
         'RELIEF': 'raised',
         'TEXT_COLOR_ACTIVE': '#E1D9D1',
         'TEXT_COLOR_DISABLED': '#E1D9D1',
+        'PADX': 3,
+        'PADY': 3
         }
 BOARD_SCORE = {
         # the layout of the board

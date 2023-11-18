@@ -1,7 +1,7 @@
 import ttkbootstrap as ttk
 from tkinter import IntVar
 from pygame import mixer
-from configuration import BOARD_SIZE, BOARD_SCORE, BOARD_ROW, BOARD_COL
+from configuration import MUSIC_PATH, BOARD_SIZE, BOARD_GAME, BOARD_SCORE, BOARD_ROW, BOARD_COL
 
 
 def play_sound():
@@ -18,7 +18,7 @@ class BoardGame(ttk.Frame):
         # set mixer and the music file
         
         mixer.init()
-        mixer.music.load('media/tictacktoe_sound.mp3')
+        mixer.music.load(MUSIC_PATH)
         
         # set score
         self.o_score = 0
@@ -308,8 +308,8 @@ class Button(ttk.Button):
                 sticky = 'news',
                 columnspan = columnspan,
                 rowspan = rowspan,
-                padx = 3,
-                pady = 3
+                padx = BOARD_GAME['PADX'],
+                pady = BOARD_GAME['PADY'],
                 )
 
 
