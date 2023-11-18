@@ -15,7 +15,7 @@ pip install ttkboostrap
 
 ## Contributing
 
-    Any advice are wellcome
+    Any advice are wellcome. :)
 
 ## License
 
