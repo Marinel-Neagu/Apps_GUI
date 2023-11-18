@@ -5,16 +5,14 @@ import ttkbootstrap as ttk
 from tkinter import IntVar
 from widgets import BoardGame, BoardScore
 from configuration import (
-    
     # layout
-    MAIN_SIZE,
+    MAIN_SIZE, BOARD_GAME, BOARD_SCORE, RESET_BUTTON,
     # style
-    BOARD_GAME,
-    BOARD_SCORE,
-    RESET_BUTTON,
+    FRAME_STYLE_SCORE, FRAME_STYLE_GAME, BUTTON_BOARD_STYLE, BUTTON_RESET_STYLE, LABEL_SCORE_STYLE,
     )
 
-# add the color title.(it works only on windows)
+# import the modules for windows (it works  only on windows)
+
 try:
     from ctypes import windll, byref, sizeof, c_int
 except Exception:
@@ -35,15 +33,18 @@ def path_resource(relative_path: str) -> str:
 
 
 class TicTacToe(ttk.Window):
+    
     player_1: IntVar
     player_2: IntVar
     tie_score: IntVar
     
     def __init__(self):
         super().__init__()
+        
         self.bind('<Alt-s>', lambda event: self.destroy())
         self.title('')
         self.set_emtpy_icon()
+        self.set_title_bar_color()
         self.set_window_size(width = MAIN_SIZE[0], height = MAIN_SIZE[1])
         
         # set up the style
@@ -51,14 +52,21 @@ class TicTacToe(ttk.Window):
         
         # style for the score/ board_score
         self.Style.configure(
+                
                 background = BOARD_SCORE['BACKGROUND'],
-                style = 'BoardScore.TFrame',
+                style = FRAME_STYLE_SCORE,
+                
                 )
+        
         self.Style.configure(
-                background = BOARD_GAME['BACKGROUND'],
-                style = 'BoardGame.TFrame',
+                
+                background = BOARD_GAME['BACKGROUND_FRAME'],
+                style = FRAME_STYLE_GAME,
+                
                 )
+        
         self.Style.configure(
+                
                 background = BOARD_GAME['BACKGROUND'],
                 bordercolor = BOARD_GAME['BORDER_COLOR'],
                 borderthickness = BOARD_GAME['BORDER_THICKNESS'],
@@ -66,10 +74,13 @@ class TicTacToe(ttk.Window):
                 font = (BOARD_GAME['FONT'], BOARD_GAME['FONT_SIZE']),
                 justify = BOARD_GAME['JUSTIFY'],
                 relief = BOARD_GAME['RELIEF'],
-                style = 'BoardGame.TButton',
+                style = BUTTON_BOARD_STYLE,
+                
                 )
+        
         self.Style.map(
-                style = 'BoardGame.TButton',
+                
+                style = BUTTON_BOARD_STYLE,
                 foreground = [
                         ('active', BOARD_GAME['TEXT_COLOR_ACTIVE']),
                         ('disabled', BOARD_GAME['TEXT_COLOR_DISABLED'])
@@ -81,6 +92,7 @@ class TicTacToe(ttk.Window):
                 )
         
         self.Style.configure(
+                
                 background = RESET_BUTTON['BACKGROUND'],
                 bordercolor = RESET_BUTTON['BORDER_COLOR'],
                 borderthickness = RESET_BUTTON['BORDER_THICKNESS'],
@@ -88,10 +100,12 @@ class TicTacToe(ttk.Window):
                 font = (RESET_BUTTON['FONT'], RESET_BUTTON['SIZE']),
                 justify = RESET_BUTTON['JUSTIFY'],
                 relief = RESET_BUTTON['RELIEF'],
-                style = 'ResetButton.TButton',
+                style = BUTTON_RESET_STYLE,
+                
                 )
         self.Style.map(
-                style = 'ResetButton.TButton',
+                
+                style = BUTTON_RESET_STYLE,
                 foreground = [
                         ('active', RESET_BUTTON['TEXT_COLOR_ACTIVE']),
                         ('disabled', RESET_BUTTON['TEXT_COLOR_DISABLED'])
@@ -99,14 +113,18 @@ class TicTacToe(ttk.Window):
                 background = [
                         ('active', RESET_BUTTON['HOVER_COLOR_ACTIVE']),
                         ('disabled', RESET_BUTTON['HOVER_COLOR_DISABLED'])]
+                
                 )
         
         self.Style.configure(
+                
                 background = BOARD_SCORE['BACKGROUND'],
                 font = (BOARD_SCORE['FONT'], BOARD_SCORE['FONT_SIZE']),
                 foreground = BOARD_SCORE['TEXT_COLOR'],
-                style = 'BoardScore.TLabel',
+                style = LABEL_SCORE_STYLE,
+                
                 )
+        
         # 	set player data
         self.player_1 = ttk.IntVar(value = 0)
         self.player_2 = ttk.IntVar(value = 0)
@@ -114,22 +132,27 @@ class TicTacToe(ttk.Window):
         
         # set widgets
         self.board_game = BoardGame(
+                
                 parent = self,
-                style_cells = 'BoardGame.TButton',
-                style_frame = 'BoardGame.TFrame',
+                style_cells = BUTTON_BOARD_STYLE,
+                style_frame = FRAME_STYLE_GAME,
                 player_1 = self.player_1,
                 tie = self.tie_score,
                 player_2 = self.player_2,
+                
                 )
+        
         self.board_score = BoardScore(
+                
                 parent = self,
-                style_labels = 'BoardScore.TLabel',
-                style_frame = 'BoardScore.TFrame',
-                style_button = 'ResetButton.TButton',
+                style_labels = LABEL_SCORE_STYLE,
+                style_frame = FRAME_STYLE_SCORE,
+                style_button = BUTTON_RESET_STYLE,
                 player_1 = self.player_1,
                 tie = self.tie_score,
                 player_2 = self.player_2,
                 function = self.clean_board
+                
                 )
         
         # run
@@ -158,9 +181,10 @@ class TicTacToe(ttk.Window):
     def set_window_size(self, width: int, height: int) -> None:
         """
         It adjust the window size to be in the center of the screen
+        
         """
-        left: int = int(self.winfo_screenwidth() / 2 - width / 2)
-        top: int = int(self.winfo_screenheight() / 2 - height / 2)
+        left = int(self.winfo_screenwidth() / 2 - width / 2)
+        top = int(self.winfo_screenheight() / 2 - height / 2)
         self.geometry(f'{width}x{height}+{left}+{top}')
     
     def set_title_bar_color(self) -> None:
@@ -168,13 +192,15 @@ class TicTacToe(ttk.Window):
     It works only on Windows, not on GNU/Linux and macOS.
         """
         try:
-            HWND: object = windll.user32.GetParent(self.winfo_id())
-            DWMWA_ATTRIBUTE: int = 35
-            TITLE_BAR_COLOR: int = 0x00333388
-            windll.dwmapi.DwmSetWindowAttribute(HWND, DWMWA_ATTRIBUTE, byref(c_int(TITLE_BAR_COLOR)), sizeof(c_int))
+            HWND = windll.user32.GetParent(self.winfo_id())
+            DWMWA_ATTRIBUTE: int = 35  # target the title bar
+            color_tile: int = 0x00030303
+            windll.dwmapi.DwmSetWindowAttribute(HWND, DWMWA_ATTRIBUTE, byref(c_int(color_tile)), sizeof(c_int))
         except Exception:
             pass
 
 
 if __name__ == '__main__':
+    
+    # starts the game
     TicTacToe()

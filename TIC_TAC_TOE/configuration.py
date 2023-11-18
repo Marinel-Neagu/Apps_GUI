@@ -1,48 +1,62 @@
 # size of the app
 
-MAIN_SIZE = (800, 900)
+MAIN_SIZE: tuple[int, int] = (800, 900)
 
 # Layout BoardScore and BoardGame.
-BOARD_SIZE = (3, 3)
-BOARD_SCORE_SIZE = (9, 2)
+BOARD_SIZE: tuple[int, int] = (3, 3)
+BOARD_ROW: list[int] = list(range(BOARD_SIZE[0]))
+BOARD_COL: list[int] = list(range(BOARD_SIZE[1]))
+
+BOARD_SCORE_SIZE: tuple[int, int] = (9, 2)
 
 # Style and attributes for widgets.
 
+FRAME_STYLE_SCORE: str = 'BoardScore.TFrame'
+FRAME_STYLE_GAME: str = 'BoardGame.TFrame'
+BUTTON_BOARD_STYLE: str = 'BoardGame.TButton'
+BUTTON_RESET_STYLE: str = 'ResetButton.TButton'
+LABEL_SCORE_STYLE: str = 'BoardScore.TLabel'
 
 BOARD_GAME = {
         'BACKGROUND': '#1F1F1F',
-        'BORDER_COLOR': '#121212',
-        'BORDER_THICKNESS': 10,
-        'BORDER_WIDTH': 2,
+        'BACKGROUND_FRAME': '#375a7f',
+        'BORDER_COLOR': '#375a7f',
+        'BORDER_THICKNESS': 0,
+        'BORDER_WIDTH': 0,
         'FONT': 'Arial',
         'FONT_SIZE': 110,
         'HOVER_COLOR_ACTIVE': '#222222',
         'HOVER_COLOR_DISABLED': '#222222',
         'JUSTIFY': 'center',
-        'PADX': 10,
-        'PADY': 10,
-        'RELIEF': 'solid',
+        'RELIEF': 'raised',
         'TEXT_COLOR_ACTIVE': '#E1D9D1',
         'TEXT_COLOR_DISABLED': '#E1D9D1',
         }
 BOARD_SCORE = {
+        # the layout of the board
+        'COLUMNS': list(range(10)),
+        'ROWS': list(range(2)),
         
+        # the style and config
         'BACKGROUND': '#121212',
         'BACKGROUND_LABEL': '#303030',
         'FONT': 'Helvetica',
         'FONT_SIZE': 34,
         'TEXT_COLOR': '#E1D9D1',
         'PLAYER_1': {
-                'row': 1,
-                'col': 1,
+                'text': 'Player X',
+                'row': 0,
+                'col': 0,
                 'columnspan': 3,
                 },
         'PLAYER_2': {
+                'text': 'Player O',
                 'row': 0,
                 'col': 6,
                 'columnspan': 3,
                 },
         'TIE': {
+                'text': 'TIE ',
                 'row': 0,
                 'col': 4,
                 'columnspan': 2,
@@ -58,11 +72,6 @@ BOARD_SCORE = {
                 'column': 0,
                 'columnspan': 3,
                 },
-        'TIE_SCORE': {
-                'row': 1,
-                'column': 4,
-                'columnspan': 2,
-                },
         'PLAYER_2_SCORE': {
                 'row': 1,
                 'column': 6,
@@ -75,11 +84,9 @@ RESET_BUTTON = {
         'BORDER_THICKNESS': 10,
         'BORDER_WIDTH': 2,
         'FONT': 'Helvetica',
-        'HOVER_COLOR_ACTIVE': '#D95092',
+        'HOVER_COLOR_ACTIVE': '#E74C3C',
         'HOVER_COLOR_DISABLED': '#E74C3C',
         'JUSTIFY': 'center',
-        'PADX': 10,
-        'PADY': 10,
         'RELIEF': 'solid',
         'SIZE': 34,
         'TEXT_COLOR_ACTIVE': '#E1D9D1',
