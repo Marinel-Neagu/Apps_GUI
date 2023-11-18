@@ -1,3 +1,4 @@
+
 # Tic Tac Toe with ttkbootstrap and pygame
 
         Simple and good looking tic tac toe game including sound. The game is only for 2 player, sadly I am not ready 
@@ -20,6 +21,7 @@ pip install ttkboostrap
 ```bash
 pip install pygame 
 ```
+
 ## Option
 
         The configuration.py file is made in that the information is stored in dictionary/hash-map or like json file.
@@ -29,6 +31,10 @@ pip install pygame
 
         Pull request are wellcome, if you have any advice I am open. If you know to add the AI boot, I will very happy 
     to add to my code
+
+## Visuals
+    ![alt text](http://url/to/img.png)
+    
 
 ## License
 
