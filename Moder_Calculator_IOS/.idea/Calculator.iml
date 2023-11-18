@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
+  <component name="NewModuleRootManager">
+    <orderEntry type="jdk" jdkName="Python 3.11 (venv) (12)" jdkType="Python SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
   <component name="SonarLintModuleSettings">
     <option name="uniqueId" value="1b3d29ab-56c1-4a52-970e-b3a868abc1f4" />
   </component>
