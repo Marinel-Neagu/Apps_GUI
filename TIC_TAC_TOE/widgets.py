@@ -1,4 +1,5 @@
 import ttkbootstrap as ttk
+from tkinter import IntVar
 from pygame import mixer
 from configuration import BOARD_SIZE, BOARD_SCORE, BOARD_ROW, BOARD_COL
 
@@ -43,7 +44,7 @@ class BoardGame(ttk.Frame):
         self.rowconfigure(BOARD_ROW, weight = 1, uniform = 'a')
         self.pack(expand = True, fill = 'both', side = 'top')
         
-        #  add the buttons
+        #  add the buttons/cells
         for rows in range(BOARD_SIZE[0]):
             for cols in range(BOARD_SIZE[1]):
                 self.board_position[rows][cols] = Button(
@@ -110,15 +111,12 @@ class BoardGame(ttk.Frame):
         self.board_position[row][column]['text'] = self.player
         
         if self.check_win() is False:
-            
             self.player = self.players_list[0]
         
         elif self.check_win() is True:
-            
             self.player_2.set(self.player_2.get() + 1)
         
         elif self.check_win() == "Tie":
-            
             self.tie_score.set(self.tie_score.get() + 1)
     
     def check_win(self):
@@ -150,23 +148,33 @@ class BoardGame(ttk.Frame):
                 
                 return True
     
-    def check_first_diagonal(self):
-        
+    def check_first_diagonal(self) -> bool:
+        """
+        Check the first diagonal of the board, from left to right
+
+        """
         if self.board_position[0][0]['text'] == self.board_position[1][1]['text'] == \
                 self.board_position[2][2]['text'] != "":
             
             return True
     
-    def check_second_diagonal(self):
+    def check_second_diagonal(self) -> bool:
+        """
+        Check the first diagonal of the board, from right to left
+
+        """
         
         if self.board_position[0][2]['text'] == self.board_position[1][1]['text'] == \
                 self.board_position[2][0]['text'] != "":
             
             return True
     
-    def empty_space(self):
-        
-        spaces = 9
+    def empty_space(self) -> bool:
+        """
+        Check the empty space of the board, and return True if is there are no space
+
+        """
+        spaces: int = 9
         for row in range(BOARD_SIZE[0]):
             for column in range(BOARD_SIZE[1]):
                 
@@ -175,7 +183,7 @@ class BoardGame(ttk.Frame):
         
         return True if spaces == 0 else False
     
-    def clean_board(self):
+    def clean_board(self) -> None:
         # Clear the button texts and backgrounds
         
         for row in range(BOARD_SIZE[0]):
@@ -192,9 +200,9 @@ class BoardScore(ttk.Frame):
             ):
         super().__init__(master = parent, style = style_frame)
         # data score
-        self.player_1_score = player_1
-        self.player_2_score = player_2
-        self.tie_score = tie
+        self.player_1_score: IntVar = player_1
+        self.player_2_score: IntVar = player_2
+        self.tie_score: IntVar = tie
         
         self.columnconfigure(BOARD_SCORE['COLUMNS'], weight = 1, uniform = 'b')
         self.rowconfigure(BOARD_SCORE['ROWS'], weight = 1, uniform = 'b')
