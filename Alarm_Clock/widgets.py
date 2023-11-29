@@ -58,9 +58,9 @@ class ClockFrame(ctk.CTkFrame):
 class AlarmClock(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(master = parent, fg_color = 'red')
-        
 
 
 class AddAlarmClock(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(master = parent, fg_color = 'blue')
+        ctk.CTkButton(self, text = '+').pack(side = 'left')

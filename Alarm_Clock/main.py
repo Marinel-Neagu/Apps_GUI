@@ -14,7 +14,7 @@ class App(ctk.CTk):
         self.bind('<Alt-s>', lambda even: self.destroy())
         self.set_geometry(height = HEIGHT, width = WIDTH)
         self.title('')
-        self.set_icon('images/empty.ico')
+        self.set_icon(path_image = 'media/empty.ico')
         self.set_title_color()
         
         # set layout
@@ -29,7 +29,7 @@ class App(ctk.CTk):
         try:
             self.iconbitmap(path_image)
         except Exception:
-            pass
+            print('An error occurred')
     
     def set_geometry(self, width, height):
         top = int(self.winfo_screenheight() / 2) - int(height / 2)
@@ -38,12 +38,14 @@ class App(ctk.CTk):
     
     def set_title_color(self):
         try:
-            HWND = windll.user32.GetParent(self.winfo_id())
-            DWMWA_ATTRIBUTE = 35
-            color = 0
-            
+            HWND: int = windll.user32.GetParent(self.winfo_id())
+            print(type(HWND))
+            DWMWA_ATTRIBUTE: int = 35
+            color: int = 0x00EEEEEE
+            windll.dwmapi.DwmSetWindowAttribute(HWND, DWMWA_ATTRIBUTE, byref(c_int(color)), sizeof(c_int))
+        
         except Exception:
-            print('Error in setting')
+            print('Error sorry it works on windows :/')
     
     def create_widgets(self):
         # create widgets
