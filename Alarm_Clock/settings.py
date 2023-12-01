@@ -1,12 +1,2 @@
-# window setup
-
-WIDTH_MAIN = 600
-HEIGHT_MAIN = 680
-COLOR_TITLE_BAR = 0x000000FF
-
-TITLE = 'CLOCK'
-
-# mini window setup
-
-WIDTH_MIN = 400
-HEIGHT_MIN = 80
+WIDTH = 500
+HEIGHT = 700
