@@ -6,7 +6,8 @@ class ClockFrame(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(master = parent)
         # layout
-        self.rowconfigure((0, 1), weight = 1, uniform = 'a')
+        self.rowconfigure(0, weight = 1, uniform = 'a')
+        self.rowconfigure(1, weight = 1, uniform = 'a')
         self.columnconfigure(0, weight = 1, uniform = 'a')
         # set data
         self.time_string = ctk.StringVar()
@@ -55,12 +56,37 @@ class ClockFrame(ctk.CTkFrame):
         self.date_string.set(time.strftime(date_format))
 
 
-class AlarmClock(ctk.CTkFrame):
+class AlarmClockPanel(ctk.CTkScrollableFrame):
     def __init__(self, parent):
         super().__init__(master = parent, fg_color = 'red')
 
 
 class AddAlarmClock(ctk.CTkFrame):
     def __init__(self, parent):
-        super().__init__(master = parent, fg_color = 'blue')
-        ctk.CTkButton(self, text = '+').pack(side = 'left')
+        super().__init__(master = parent)
+        
+        # button
+        self.font = ctk.CTkFont(
+                family = 'Times New Roman',
+                size = 50,
+                weight = 'bold'
+                )
+        self.button = ctk.CTkButton(
+                master = self,
+                text = '+',
+                command = self.button_click,
+                corner_radius = 10,
+                font = self.font
+                )
+        self.button.pack()
+        self.pack(expand = True, fill = 'both')
+
+
+class AlarmsFrame(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(
+                master = parent,
+                fg_color = 'blue'
+                )
+        
+        ctk.CTkLabel(master = self, text = 'something').pack(expand = True, fill = 'x')

@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from settings import WIDTH, HEIGHT
-from widgets import ClockFrame, AlarmClock, AddAlarmClock
+from widgets import ClockFrame, AlarmClockPanel, AddAlarmClock
 
 try:
     from ctypes import windll, byref, sizeof, c_int
@@ -17,19 +17,17 @@ class App(ctk.CTk):
         self.set_icon(path_image = 'media/empty.ico')
         self.set_title_color()
         
-        # set layout
-        self.rowconfigure((0, 1, 2), weight = 1, uniform = 'a')
-        self.columnconfigure(0, weight = 1, uniform = 'a')
-        
         # set widgets
         self.create_widgets()
+        
+        # run the window
         self.mainloop()
     
     def set_icon(self, path_image):
         try:
             self.iconbitmap(path_image)
         except Exception:
-            print('An error occurred')
+            pass
     
     def set_geometry(self, width, height):
         top = int(self.winfo_screenheight() / 2) - int(height / 2)
@@ -39,24 +37,40 @@ class App(ctk.CTk):
     def set_title_color(self):
         try:
             HWND: int = windll.user32.GetParent(self.winfo_id())
-            print(type(HWND))
             DWMWA_ATTRIBUTE: int = 35
             color: int = 0x00EEEEEE
             windll.dwmapi.DwmSetWindowAttribute(HWND, DWMWA_ATTRIBUTE, byref(c_int(color)), sizeof(c_int))
         
         except Exception:
-            print('Error sorry it works on windows :/')
+            pass
     
     def create_widgets(self):
         # create widgets
         clock_frame = ClockFrame(self)
-        alarm_frame = AlarmClock(self)
-        add_alarm_clock_frame = AddAlarmClock(self)
+        alarm_panel = AlarmClockPanel(self)
+        add_alarm_clock_button = AddAlarmClock(self)
         
-        # set layout for widgets
-        clock_frame.grid(row = 0, column = 0, sticky = 'nsew')
-        alarm_frame.grid(row = 1, column = 0, sticky = 'nsew')
-        add_alarm_clock_frame.grid(row = 2, column = 0, sticky = 'esw')
+        # set layout for widgets(place method)
+        
+        clock_frame.place(
+                relx = 0,
+                rely = 0,
+                relwidth = 1,
+                relheight = 0.3,
+                anchor = 'nw'
+                )
+        alarm_panel.place(
+                relx = 0,
+                rely = 0.3,
+                relwidth = 1,
+                relheight = 0.6,
+                anchor = 'nw'
+                )
+        add_alarm_clock_button.place(
+                relx = 0.5,
+                rely = 0.95,
+                anchor = 'center'
+                )
 
 
 if __name__ == '__main__':
