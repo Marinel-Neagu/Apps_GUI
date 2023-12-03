@@ -1,6 +1,6 @@
-import customtkinter as ctk
+import ttkbootstrap as ttk
 from settings import WIDTH, HEIGHT
-from widgets import ClockFrame, AlarmClockPanel, AddAlarmClock
+from widgets import ClockFrame, AlarmClockPanel, AddAlarmClock, AlarmsFrame
 
 try:
     from ctypes import windll, byref, sizeof, c_int
@@ -8,9 +8,9 @@ except ImportError:
     pass
 
 
-class App(ctk.CTk):
+class App(ttk.Window):
     def __init__(self):
-        super().__init__()
+        super().__init__(themename = 'darkly')
         self.bind('<Alt-s>', lambda even: self.destroy())
         self.set_geometry(height = HEIGHT, width = WIDTH)
         self.title('')
@@ -18,7 +18,33 @@ class App(ctk.CTk):
         self.set_title_color()
         
         # set widgets
-        self.create_widgets()
+        
+        # create widgets
+        self.clock_frame = ClockFrame(self)
+        self.alarm_panel = AlarmClockPanel(self)
+        self.add_alarm_clock_button = AddAlarmClock(self, button_function = self.add_alarms)
+        
+        # set layout for widgets(place method)
+        
+        self.clock_frame.place(
+                relx = 0,
+                rely = 0,
+                relwidth = 1,
+                relheight = 0.3,
+                anchor = 'nw'
+                )
+        self.alarm_panel.place(
+                relx = 0,
+                rely = 0.3,
+                relwidth = 1,
+                relheight = 0.6,
+                anchor = 'nw'
+                )
+        self.add_alarm_clock_button.place(
+                relx = 0.5,
+                rely = 0.95,
+                anchor = 'center'
+                )
         
         # run the window
         self.mainloop()
@@ -44,33 +70,9 @@ class App(ctk.CTk):
         except Exception:
             pass
     
-    def create_widgets(self):
-        # create widgets
-        clock_frame = ClockFrame(self)
-        alarm_panel = AlarmClockPanel(self)
-        add_alarm_clock_button = AddAlarmClock(self)
-        
-        # set layout for widgets(place method)
-        
-        clock_frame.place(
-                relx = 0,
-                rely = 0,
-                relwidth = 1,
-                relheight = 0.3,
-                anchor = 'nw'
-                )
-        alarm_panel.place(
-                relx = 0,
-                rely = 0.3,
-                relwidth = 1,
-                relheight = 0.6,
-                anchor = 'nw'
-                )
-        add_alarm_clock_button.place(
-                relx = 0.5,
-                rely = 0.95,
-                anchor = 'center'
-                )
+    def add_alarms(self):
+        labels = AlarmsFrame(self.alarm_panel)
+        self.alarm_panel.add_alarm(labels)
 
 
 if __name__ == '__main__':

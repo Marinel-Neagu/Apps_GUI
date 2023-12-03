@@ -1,92 +1,172 @@
-import customtkinter as ctk
+from ttkbootstrap.scrolled import ScrolledFrame
+import ttkbootstrap as ttk
 import time
 
 
-class ClockFrame(ctk.CTkFrame):
-    def __init__(self, parent):
+class ClockFrame(ttk.Frame):
+    def __init__(self, parent, ):
         super().__init__(master = parent)
         # layout
         self.rowconfigure(0, weight = 1, uniform = 'a')
         self.rowconfigure(1, weight = 1, uniform = 'a')
         self.columnconfigure(0, weight = 1, uniform = 'a')
+        
         # set data
-        self.time_string = ctk.StringVar()
-        self.date_string = ctk.StringVar()
+        self.time_string = ttk.StringVar()
+        self.date_string = ttk.StringVar()
         
-        # set font for labels
-        time_font = ctk.CTkFont(
-                family = 'Helvetica',
-                size = 60,
-                weight = "bold",
-                )
-        
-        date_font = ctk.CTkFont(
-                family = 'Helvetica',
-                size = 25,
-                weight = "bold",
-                )
-        # set widgets
-        
-        self.label_time = ctk.CTkLabel(
-                master = self,
-                textvariable = self.time_string,
-                font = time_font,
+        # set set style
+        self.style = ttk.Style()
+        self.style.configure(
+                style = 'Time.TLabel',
+                font = ('Helvetica', 30, 'bold'),
                 anchor = 'center'
                 )
         
-        self.label_date = ctk.CTkLabel(
-                master = self,
-                textvariable = self.date_string,
-                anchor = 'center',
-                font = date_font,
+        self.style.configure(
+                style = 'Data.TLabel',
+                font = ('Helvetica', 30, 'bold'),
+                anchor = 'center'
                 )
         
-        self.label_time.grid(row = 0, column = 0, columnspan = 2, sticky = 'ns')
-        self.label_date.grid(row = 1, column = 0, columnspan = 2, sticky = 'n')
+        # set widgets
+        
+        self.label_time = ttk.Label(
+                master = self,
+                textvariable = self.time_string,
+                style = 'Time.TLabel'
+                )
+        
+        self.label_date = ttk.Label(
+                master = self,
+                textvariable = self.date_string,
+                style = 'Data.TLabel'
+                )
+        
+        # set layout
+        
+        self.label_time.grid(
+                row = 0,
+                column = 0,
+                columnspan = 2,
+                sticky = 'ns'
+                )
+        self.label_date.grid(
+                row = 1,
+                column = 0,
+                columnspan = 2,
+                sticky = 'n'
+                )
         
         # logic
         self.update_time()
     
     def update_time(self):
+        # set time and date format
+        
         time_format = "%H:%M:%S"
         date_format = "%a %B %d"
+        
+        # update the time for every 1 second(using a recursion func)
         
         self.time_string.set(time.strftime(time_format))
         self.after(1000, self.update_time)
         self.date_string.set(time.strftime(date_format))
 
 
-class AlarmClockPanel(ctk.CTkScrollableFrame):
+class AlarmClockPanel(ScrolledFrame):
     def __init__(self, parent):
-        super().__init__(master = parent, fg_color = 'red')
+        super().__init__(master = parent)
+    
+    def add_alarm(self, alarm):
+        alarm.pack(expand = True, fill = 'both')
 
 
-class AddAlarmClock(ctk.CTkFrame):
-    def __init__(self, parent):
+class AddAlarmClock(ttk.Frame):
+    def __init__(self, parent, button_function):
         super().__init__(master = parent)
         
         # button
-        self.font = ctk.CTkFont(
-                family = 'Times New Roman',
-                size = 50,
-                weight = 'bold'
-                )
-        self.button = ctk.CTkButton(
+        self.button = ttk.Button(
                 master = self,
                 text = '+',
-                command = self.button_click,
-                corner_radius = 10,
-                font = self.font
+                command = button_function,
+                style = 'Alarm.TButton',
                 )
-        self.button.pack()
-        self.pack(expand = True, fill = 'both')
+        self.button.pack(expand = True, fill = 'both')
+        self.top_level = TimeChoser(self)
 
 
-class AlarmsFrame(ctk.CTkFrame):
+class AlarmsFrame(ttk.Frame):
     def __init__(self, parent):
-        super().__init__(
-                master = parent,
-                fg_color = 'blue'
+        super().__init__(master = parent)
+        
+        self.alarm = ttk.Label(master = self, text = 'haha')
+        self.alarm.pack(expand = True, fill = 'both')
+
+
+class TimeChoser(ttk.Toplevel):
+    
+    def __init__(self, parent):
+        super().__init__(master = parent, )
+        
+        # set attributes
+        
+        self.bind('<Alt-s>', lambda event: self.destroy())
+        self.title('Clock')
+        self.set_geometry(width = 300, height = 300)
+        
+        self.rowconfigure((0, 1), weight = 1, uniform = 'a')
+        self.columnconfigure((0, 1, 2), weight = 1, uniform = 'a')
+        # set data
+        self.hour_int = ttk.IntVar(value = 0)
+        self.minute_int = ttk.IntVar(value = 0)
+        
+        # set style
+        self.style_spin = ttk.Style()
+        self.style_spin.configure(
+                style = 'TButton',
+                font = ('Helvetica', 70, 'bold'),
                 )
         
-        ctk.CTkLabel(master = self, text = 'something').pack(expand = True, fill = 'x')
+        # create widgets
+        
+        self.hour_spin = ttk.Spinbox(
+                master = self,
+                textvariable = self.hour_int,
+                from_ = 0,
+                to = 23
+                )
+        self.first_label = ttk.Label(master = self, text = ':')
+        self.minute_spin = ttk.Spinbox(
+                master = self,
+                textvariable = self.minute_int,
+                from_ = 0,
+                to = 23
+                )
+        
+        self.ok_label = ttk.Button(
+                master = self,
+                text = 'OK',
+                style = 'TopLevel.TButton',
+                
+                )
+        self.cancel_label = ttk.Button(
+                master = self,
+                text = 'Cancel',
+                command = self.destroy,
+                style = 'TopLevel.TButton',
+                )
+        
+        # layout
+        self.hour_spin.grid(row = 0, column = 0, )
+        self.first_label.grid(row = 0, column = 1)
+        self.minute_spin.grid(row = 0, column = 2)
+        
+        self.ok_label.grid(row = 1, column = 0)
+        self.cancel_label.grid(row = 1, column = 2)
+    
+    def set_geometry(self, width, height):
+        top = int(self.winfo_screenheight() / 2) - int(height / 2)
+        left = int(self.winfo_screenwidth() / 2) - int(width / 2)
+        self.geometry(f'{width}x{height}+{left}+{top}')
