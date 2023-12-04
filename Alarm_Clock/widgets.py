@@ -147,8 +147,7 @@ class TimeChoser(ttk.Toplevel):
                 style = 'TSpinbox',
                 background = 'green',
                 anchor = 'center',
-                width = 2,
-                arrowsize = 50,
+                arrowsize = 30,
                 )
         
         # create widgets
@@ -156,7 +155,7 @@ class TimeChoser(ttk.Toplevel):
         self.hour_spin = ttk.Spinbox(
                 master = self,
                 textvariable = self.hour_int,
-                font = ('Helvetica', 90, 'bold'),
+                font = ('Helvetica', 20, 'bold'),
                 from_ = 0,
                 to = 23
                 )
