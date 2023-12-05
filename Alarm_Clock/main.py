@@ -22,20 +22,14 @@ class App(ttk.Window):
         
         self.hour_int = ttk.IntVar(value = 0)
         self.minute_int = ttk.IntVar(value = 0)
+        self.top_level = None
         
         # create widgets
         self.clock_frame = ClockFrame(self)
         self.alarm_panel = AlarmClockPanel(self)
-        self.add_alarm_clock_button = AddAlarmClock(self, button_function = self.add_alarms)
+        self.button_top_level = AddAlarmClock(parent = self, button_function = self.start_top_level)
         
         # add the top level
-        self.top_level = TopLevel(
-                parent = self,
-                hour_int = self.hour_int,
-                minute_int = self.minute_int,
-                ok_function = self.ok_button,
-                cancel_function = self.cancel_button
-                )
         
         # set layout for widgets(place method)
         
@@ -53,7 +47,7 @@ class App(ttk.Window):
                 relheight = 0.6,
                 anchor = 'nw'
                 )
-        self.add_alarm_clock_button.place(
+        self.button_top_level.place(
                 relx = 0.5,
                 rely = 0.95,
                 anchor = 'center'
@@ -74,6 +68,7 @@ class App(ttk.Window):
         self.geometry(f'{width}x{height}+{left}+{top}')
     
     def set_title_color(self):
+        
         try:
             HWND: int = windll.user32.GetParent(self.winfo_id())
             DWMWA_ATTRIBUTE: int = 35
@@ -82,6 +77,15 @@ class App(ttk.Window):
         
         except Exception:
             pass
+    
+    def start_top_level(self):
+        self.top_level = TopLevel(
+                parent = self,
+                hour_int = self.hour_int,
+                minute_int = self.minute_int,
+                ok_function = self.ok_button,
+                cancel_function = self.cancel_button
+                )
     
     def ok_button(self):
         if self.hour_int.get() or self.minute_int.get() != 0:
@@ -94,17 +98,13 @@ class App(ttk.Window):
             labels = AlarmsFrame(parent = self.alarm_panel, text = text_label)
             
             self.alarm_panel.add_alarm(labels)
+            self.top_level.destroy()
     
     def cancel_button(self):
         
         self.hour_int.set(value = 0)
         self.minute_int.set(value = 0)
-        self.destroy()
-        print(self.hour_int.get())
-    
-    def add_alarms(self):
-        labels = AlarmsFrame(self.alarm_panel, )
-        self.alarm_panel.add_alarm(labels)
+        self.top_level.destroy()
 
 
 class TopLevel(ttk.Toplevel):
