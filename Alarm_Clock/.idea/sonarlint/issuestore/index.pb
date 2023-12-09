@@ -30,3 +30,11 @@ w
 G.idea/sonarlint/issuestore/3/4/34c692f124e2c33c24e0b88cf77c76d58132c067,4/9/49118e79781f35e091ad925c6553189a1cf6c84b
 <
 test_main.py,a/2/a23e969147c8e853b488dfad75ef624cc9831522
+;
+toplevel.py,5/d/5dbd39a57f6ab7d6e683ce72af62108091d25810
+?
+test_widgets.py,f/7/f74490b0457383a11dc72cdaed698450e4903caa
+>
+frame_alarm.py,7/e/7e4ff3e9f2c5ab9018bbb7b91b96a69d261c2137
+@
+configuration.py,e/7/e7a71d767cea31efc8699be646ee073611f9426c

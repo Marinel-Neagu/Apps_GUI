@@ -1,3 +1,4 @@
+from frame_alarm import AlarmsFrame
 from ttkbootstrap.scrolled import ScrolledFrame
 import ttkbootstrap as ttk
 import time
@@ -94,11 +95,3 @@ class AddAlarmClock(ttk.Frame):
                 style = 'Alarm.TButton',
                 )
         self.button.pack(expand = True, fill = 'both')
-
-
-class AlarmsFrame(ttk.Frame):
-    def __init__(self, parent, text):
-        super().__init__(master = parent)
-        
-        self.alarm = ttk.Label(master = self, text = text)
-        self.alarm.pack(expand = True, fill = 'both')
