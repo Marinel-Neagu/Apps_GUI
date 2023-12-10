@@ -1,8 +1,6 @@
 
 7
 main.py,f/1/f1bdda93d9a278e358509d498e17d97764c1fb29
-;
-settings.py,8/8/888c15d72e41c9f0f1882f4aea4c2d19f1a044eb
 :
 
 widgets.py,1/7/17f99bc6b82fa66ca09b72bc8b0f325ece27eeb6
@@ -38,3 +36,7 @@ G.idea/sonarlint/issuestore/3/4/34c692f124e2c33c24e0b88cf77c76d58132c067,4/9/49
 frame_alarm.py,7/e/7e4ff3e9f2c5ab9018bbb7b91b96a69d261c2137
 @
 configuration.py,e/7/e7a71d767cea31efc8699be646ee073611f9426c
+S
+#.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
+]
+-.idea/sonarlint/securityhotspotstore/index.pb,8/8/88a9255124c95bdc913197c120a8d560edc59c8e
