@@ -1,11 +1,10 @@
 import ttkbootstrap as ttk
-import time
 import pygame
 
 
 class AlarmsFrame(ttk.Frame):
-    def __init__(self, parent, text):
-        super().__init__(master = parent)
+    def __init__(self, parent, text, delete_alarm):
+        super().__init__(master = parent, )
         
         # set grid layout
         self.rowconfigure((0, 1), weight = 1, uniform = 'a')
@@ -26,9 +25,16 @@ class AlarmsFrame(ttk.Frame):
                 variable = self.variable_checkbutton,
                 command = self.set_alarm
                 )
+        self.delete_button = ttk.Button(
+                master = self,
+                text = 'Delete alarm',
+                command = delete_alarm
+                
+                )
         # set layout
         self.time_label.grid(row = 0, column = 0, sticky = 'news')
-        self.checkbutton.grid(row = 0, column = 6, sticky = 'news ')
+        self.checkbutton.grid(row = 0, column = 5, sticky = 'news ')
+        self.delete_button.grid(row = 0, column = 6, sticky = 'news')
         # add the layer of day
         self.add_days()
     
@@ -40,31 +46,22 @@ class AlarmsFrame(ttk.Frame):
                     day_name = day,
                     row = 1,
                     column = index,
-                    function = self.select_alarm
                     )
     
     def set_alarm(self):
         
         if self.variable_checkbutton.get():
             print(f'alarm set at {self.time_str} on {self}')
-        
-        else:
-            print('Is bad')
-    
-    def select_alarm(self, event = None):
-        self.day_label.configure(background = 'red')
-    
-    def unselect_alarm(self, event = None):
-        self.day_label.configure(background = 'green')
 
 
 class DayButton(ttk.Label):
-    def __init__(self, parent, day_name, row, column, function):
+    def __init__(self, parent, day_name, row, column):
         super().__init__(
                 master = parent,
                 text = day_name,
                 background = 'green',
                 )
+        self.state = ttk.BooleanVar(value = False)
         self.grid(
                 row = row,
                 column = column,
@@ -72,5 +69,12 @@ class DayButton(ttk.Label):
                 padx = 2,
                 pady = 2
                 )
-        
-        self.bind('<Button>', function(even = None))
+        self.bind('<Button>', self.select_alarm)
+    
+    def select_alarm(self, event = None):
+        if self.state.get():
+            self.configure(background = 'red')
+            self.state.set(False)
+        else:
+            self.configure(background = 'green')
+            self.state.set(True)

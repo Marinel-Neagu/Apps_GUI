@@ -29,7 +29,8 @@ class App(ttk.Window):
         self.alarm_panel = AlarmClockPanel(self)
         self.button_top_level = AddAlarmClock(parent = self, button_function = self.start_top_level)
         
-        labels = AlarmsFrame(parent = self.alarm_panel, text = '12:00')
+        # dummy alarm for testing
+        labels = AlarmsFrame(parent = self.alarm_panel, text = '12:00', delete_alarm = self.delete_alarm)
         self.alarm_panel.add_alarm(labels)
         
         # set layout for widgets(place method)
@@ -96,7 +97,7 @@ class App(ttk.Window):
             minutes_str = str(minute) if minute >= 10 else f'0{minute}'
             
             text_label = f'{hour_str}:{minutes_str}'
-            labels = AlarmsFrame(parent = self.alarm_panel, text = text_label)
+            labels = AlarmsFrame(parent = self.alarm_panel, text = text_label, delete_alarm = self.delete_alarm)
             
             self.alarm_panel.add_alarm(labels)
             self.hour_int.set(value = 0)
@@ -108,6 +109,11 @@ class App(ttk.Window):
         self.hour_int.set(value = 0)
         self.minute_int.set(value = 0)
         self.top_level.destroy()
+    
+    def delete_alarm(self):
+        labels = AlarmsFrame(parent = self.alarm_panel, text = 'something', delete_alarm = self.delete_alarm)
+        
+        self.alarm_panel.delete_alarm(labels)
 
 
 if __name__ == '__main__':
