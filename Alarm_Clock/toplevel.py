@@ -1,7 +1,8 @@
 import ttkbootstrap as ttk
+import tkinter as tk
 
 
-class TopLevel(ttk.Toplevel):
+class TopLevel(tk.Toplevel):
     def __init__(self, parent, hour_int, minute_int, ok_function, cancel_function):
         super().__init__(master = parent)
         
@@ -10,6 +11,7 @@ class TopLevel(ttk.Toplevel):
         self.bind('<Alt-s>', lambda event: self.destroy())
         self.title('Clock')
         self.set_geometry(width = 300, height = 300)
+        self.attributes('-type', 'dock')
         
         # set data
         self.hour_int = hour_int

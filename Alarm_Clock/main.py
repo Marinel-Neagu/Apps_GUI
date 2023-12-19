@@ -15,7 +15,7 @@ class App(ttk.Window):
         self.bind('<Alt-s>', lambda even: self.destroy())
         self.set_geometry(height = HEIGHT, width = WIDTH)
         self.title('')
-        self.set_icon(path_image = 'media/empty.ico')
+        self.set_icon(path_image = 'media/image/empty.ico')
         self.set_title_color()
         
         # set data
@@ -26,15 +26,19 @@ class App(ttk.Window):
         
         # create widgets
         self.clock_frame = ClockFrame(self)
-        self.alarm_panel = AlarmClockPanel(self)
+        self.alarm_panel = AlarmClockPanel(parent = self)
         self.button_top_level = AddAlarmClock(parent = self, button_function = self.start_top_level)
         
         # dummy alarm for testing
-        labels = AlarmsFrame(parent = self.alarm_panel, text = '12:00', delete_alarm = self.delete_alarm)
-        self.alarm_panel.add_alarm(labels)
+        
+        alarm = AlarmsFrame(
+                parent = self.alarm_panel,
+                text = '12:00',
+                delete_alarm = self.delete_alarm
+                )
+        self.alarm_panel.add_alarm(alarm)
         
         # set layout for widgets(place method)
-        
         self.clock_frame.place(
                 relx = 0,
                 rely = 0,
@@ -74,7 +78,7 @@ class App(ttk.Window):
         try:
             HWND: int = windll.user32.GetParent(self.winfo_id())
             DWMWA_ATTRIBUTE: int = 35
-            color: int = 0x00EEEEEE
+            color: int = 0x00000000
             windll.dwmapi.DwmSetWindowAttribute(HWND, DWMWA_ATTRIBUTE, byref(c_int(color)), sizeof(c_int))
         
         except Exception:
@@ -90,16 +94,16 @@ class App(ttk.Window):
                 )
     
     def ok_button(self):
-        if self.hour_int.get() or self.minute_int.get() != 0:
+        if self.hour_int.get() or self.minute_int.get():
             
             hour, minute = self.hour_int.get(), self.minute_int.get()
             hour_str = str(hour) if hour >= 10 else f'0{hour}'
             minutes_str = str(minute) if minute >= 10 else f'0{minute}'
             
             text_label = f'{hour_str}:{minutes_str}'
-            labels = AlarmsFrame(parent = self.alarm_panel, text = text_label, delete_alarm = self.delete_alarm)
+            alarm_frame = AlarmsFrame(parent = self.alarm_panel, text = text_label, delete_alarm = self.delete_alarm)
             
-            self.alarm_panel.add_alarm(labels)
+            self.alarm_panel.add_alarm(alarm_frame)
             self.hour_int.set(value = 0)
             self.minute_int.set(value = 0)
             self.top_level.destroy()
@@ -111,9 +115,7 @@ class App(ttk.Window):
         self.top_level.destroy()
     
     def delete_alarm(self):
-        labels = AlarmsFrame(parent = self.alarm_panel, text = 'something', delete_alarm = self.delete_alarm)
-        
-        self.alarm_panel.delete_alarm(labels)
+        self.alarm_panel.delete()
 
 
 if __name__ == '__main__':
