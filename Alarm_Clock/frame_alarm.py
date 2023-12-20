@@ -3,7 +3,7 @@ import pygame
 
 
 class AlarmsFrame(ttk.Frame):
-    def __init__(self, parent, text, delete_alarm):
+    def __init__(self, parent, text):
         super().__init__(master = parent, )
         
         # set grid layout
@@ -28,13 +28,14 @@ class AlarmsFrame(ttk.Frame):
         self.delete_button = ttk.Button(
                 master = self,
                 text = 'Delete alarm',
-                command = delete_alarm
-                
+                command = self.delete_alarm
                 )
+        
         # set layout
         self.time_label.grid(row = 0, column = 0, sticky = 'news')
         self.checkbutton.grid(row = 0, column = 5, sticky = 'news ')
         self.delete_button.grid(row = 0, column = 6, sticky = 'news')
+        
         # add the layer of day
         self.add_days()
     
@@ -52,6 +53,9 @@ class AlarmsFrame(ttk.Frame):
         
         if self.variable_checkbutton.get():
             print(f'alarm set at {self.time_str} on {self}')
+    
+    def delete_alarm(self):
+        self.destroy()
 
 
 class DayButton(ttk.Label):

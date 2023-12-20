@@ -34,7 +34,6 @@ class App(ttk.Window):
         alarm = AlarmsFrame(
                 parent = self.alarm_panel,
                 text = '12:00',
-                delete_alarm = self.delete_alarm
                 )
         self.alarm_panel.add_alarm(alarm)
         
@@ -101,7 +100,7 @@ class App(ttk.Window):
             minutes_str = str(minute) if minute >= 10 else f'0{minute}'
             
             text_label = f'{hour_str}:{minutes_str}'
-            alarm_frame = AlarmsFrame(parent = self.alarm_panel, text = text_label, delete_alarm = self.delete_alarm)
+            alarm_frame = AlarmsFrame(parent = self.alarm_panel, text = text_label)
             
             self.alarm_panel.add_alarm(alarm_frame)
             self.hour_int.set(value = 0)
@@ -113,9 +112,6 @@ class App(ttk.Window):
         self.hour_int.set(value = 0)
         self.minute_int.set(value = 0)
         self.top_level.destroy()
-    
-    def delete_alarm(self):
-        self.alarm_panel.delete()
 
 
 if __name__ == '__main__':
