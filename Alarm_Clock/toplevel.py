@@ -12,7 +12,6 @@ class TopLevel(tk.Toplevel):
         self.title('Clock')
         self.set_geometry(width = 300, height = 300)
         
-        self.attributes('-type', 'dock')  # it on linux
         
         # set data
         self.hour_int = hour_int

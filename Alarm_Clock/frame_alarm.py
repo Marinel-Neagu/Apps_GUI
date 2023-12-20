@@ -58,7 +58,7 @@ class AlarmsFrame(ttk.Frame):
     
     def delete_alarm(self):
         self.print_select_alarm()
-        # self.destroy()
+        self.destroy()
     
     def print_select_alarm(self):
         self.selected_days.clear()
