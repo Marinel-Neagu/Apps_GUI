@@ -65,7 +65,7 @@ class DayButton(ttk.Label):
                 text = day_name,
                 background = 'green',
                 )
-        self.state = ttk.BooleanVar(value = False)
+        self.state = ttk.BooleanVar(value = True)
         self.grid(
                 row = row,
                 column = column,
@@ -73,12 +73,23 @@ class DayButton(ttk.Label):
                 padx = 2,
                 pady = 2
                 )
-        self.bind('<Button>', self.select_alarm)
+        self.bind('<Enter>', self.enter_alarm)
+        self.bind('<Leave>', self.leave_alarm)
+        self.bind('<Button-1>', self.select_alarm)
+    
+    def enter_alarm(self, event = None):
+        if self.state.get():
+            self.configure(background = 'blue')
+    
+    def leave_alarm(self, event = None):
+        if self.state.get():
+            self.configure(background = 'green')
     
     def select_alarm(self, event = None):
         if self.state.get():
             self.configure(background = 'red')
             self.state.set(False)
+        
         else:
             self.configure(background = 'green')
             self.state.set(True)

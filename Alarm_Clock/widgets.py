@@ -78,7 +78,6 @@ class ClockFrame(ttk.Frame):
 class AlarmClockPanel(ScrolledFrame):
     def __init__(self, parent):
         super().__init__(master = parent)
-        self.list_alarm = []
     
     def add_alarm(self, alarm):
         alarm.pack(fill = 'both', expand = True)
