@@ -6,6 +6,10 @@ class AlarmsFrame(ttk.Frame):
     def __init__(self, parent, text):
         super().__init__(master = parent, )
         
+        # set data
+        self.day_label = list(range(7))
+        self.selected_days = list()
+        
         # set grid layout
         self.rowconfigure((0, 1), weight = 1, uniform = 'a')
         self.columnconfigure(list(range(0, 7)), weight = 1, uniform = 'a')
@@ -37,12 +41,10 @@ class AlarmsFrame(ttk.Frame):
         self.delete_button.grid(row = 0, column = 6, sticky = 'news')
         
         # add the layer of day
-        self.add_days()
-    
-    def add_days(self):
         list_day = ('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat')
+        
         for index, day in enumerate(list_day):
-            self.day_label = DayButton(
+            self.day_label[index] = DayButton(
                     parent = self,
                     day_name = day,
                     row = 1,
@@ -55,7 +57,17 @@ class AlarmsFrame(ttk.Frame):
             print(f'alarm set at {self.time_str} on {self}')
     
     def delete_alarm(self):
-        self.destroy()
+        self.print_select_alarm()
+        # self.destroy()
+    
+    def print_select_alarm(self):
+        self.selected_days.clear()
+        for i in range(7):
+            if self.day_label[i].state.get():
+                pass
+            else:
+                self.selected_days.append(self.day_label[i]['text'])
+        print(self.selected_days)
 
 
 class DayButton(ttk.Label):
