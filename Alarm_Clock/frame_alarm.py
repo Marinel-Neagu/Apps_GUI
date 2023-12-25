@@ -1,24 +1,27 @@
 import ttkbootstrap as ttk
 import pygame
+import time
+import datetime
 
 
 class AlarmsFrame(ttk.Frame):
     def __init__(self, parent, text):
         super().__init__(master = parent, )
         
-        # set data
-        self.day_label = list(range(7))
-        self.selected_days = list()
-        
         # set grid layout
+        
         self.rowconfigure((0, 1), weight = 1, uniform = 'a')
         self.columnconfigure(list(range(0, 7)), weight = 1, uniform = 'a')
         
         #  set data
+        
+        self.day_label = list(range(7))
+        self.days_on = list()
         self.time_str = text
         self.variable_checkbutton = ttk.BooleanVar()
-        self.days_on = list()
+        
         # set widgets
+        
         self.time_label = ttk.Label(
                 master = self,
                 text = self.time_str,
@@ -29,6 +32,7 @@ class AlarmsFrame(ttk.Frame):
                 variable = self.variable_checkbutton,
                 command = self.set_alarm
                 )
+        
         self.delete_button = ttk.Button(
                 master = self,
                 text = 'Delete alarm',
@@ -53,21 +57,36 @@ class AlarmsFrame(ttk.Frame):
     
     def set_alarm(self):
         
+        self.select_days()
+        day = ", ".join(self.days_on)
+        
         if self.variable_checkbutton.get():
-            print(f'alarm set at {self.time_str} on {self}')
+            
+            print(f'The alarm is set at: {self.time_str} on {day}')
+            self.start_alarm(hour = self.time_str, day = day)
+        
+        else:
+            print(f'The alarm is off: {self.time_str} on {", ".join(self.days_on)}')
     
     def delete_alarm(self):
-        self.print_select_alarm()
         self.destroy()
     
-    def print_select_alarm(self):
-        self.selected_days.clear()
+    def select_days(self):
+        
+        self.days_on.clear()
         for i in range(7):
-            if self.day_label[i].state.get():
-                pass
-            else:
-                self.selected_days.append(self.day_label[i]['text'])
-        print(self.selected_days)
+            if not self.day_label[i].state.get():
+                self.days_on.append(self.day_label[i]['text'])
+    
+    def start_alarm(self, hour, day):
+        
+        alarm_selected = f'{day} {hour}'
+        alarm_time = datetime.datetime.now().strftime('%a %H:%M')
+        
+        if alarm_selected == alarm_time:
+            print('The alarm is clocking!')
+        else:
+            print('The alarm is bad!')
 
 
 class DayButton(ttk.Label):
