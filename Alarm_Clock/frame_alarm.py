@@ -1,8 +1,33 @@
 import ttkbootstrap as ttk
+from sys import exit
 import pygame
 from time import sleep
 import datetime
-from threading import Thread
+from threading import Thread, Event
+
+
+def config_alarm(time, day, event):
+    hour = time.split(':')[0]
+    minutes = time.split(':')[1]
+    
+    day_selected = day
+    # today = datetime.datetime.now().strftime('%a')  TODO: need to make something
+    total_second = 3600 * int(hour) + 60 * int(minutes)
+    counter = 0
+    
+    if day_selected == 'Wed':
+        print('alarm is clocking')
+        while True:
+            if not event.is_set():
+                if counter <= total_second:
+                    sleep(1)
+                    counter += 1
+                    print('Tic Tac:', counter)
+                else:
+                    print('Sound on is over')
+            else:
+                print('sorry is done')
+                break
 
 
 class AlarmsFrame(ttk.Frame):
@@ -60,14 +85,16 @@ class AlarmsFrame(ttk.Frame):
         
         self.select_days()
         day = ", ".join(self.days_on)
+        event = Event()
+        alarm_test = Thread(target = config_alarm, args = (self.time_str, day, event), daemon = True)
+        alarm_test.start()
         
         if self.variable_checkbutton.get():
-            
             print(f'The alarm is set at: {self.time_str} on {day}')
-            self.alarm_(day)
         
         else:
             print(f'The alarm is off: {self.time_str} on {", ".join(self.days_on)}')
+            event.set()
     
     def delete_alarm(self):
         self.destroy()
@@ -78,31 +105,6 @@ class AlarmsFrame(ttk.Frame):
         for i in range(7):
             if not self.day_label[i].state.get():
                 self.days_on.append(self.day_label[i]['text'])
-    
-    def start_alarm(self, time, day):
-        hour = time.split(':')[0]
-        minutes = time.split(':')[1]
-        
-        day_selected = day
-        today = datetime.datetime.now().strftime('%a')
-        print(today)
-        
-        total_second = 3600 * int(hour) + 60 * int(minutes)
-        counter = 0
-        
-        if day_selected == today:
-            print('alarm is clocking')
-            while True:
-                if counter <= total_second:
-                    sleep(1)
-                    counter += 1
-                    print('Tic Tac:', counter)
-                else:
-                    print('Sound on is over')
-                    break
-    
-    def alarm_(self, day):
-        Thread(target = self.start_alarm, args = (self.time_str, day), daemon = True).start()
 
 
 class DayButton(ttk.Label):
