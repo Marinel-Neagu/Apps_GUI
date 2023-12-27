@@ -64,7 +64,7 @@ class AlarmsFrame(ttk.Frame):
         if self.variable_checkbutton.get():
             
             print(f'The alarm is set at: {self.time_str} on {day}')
-            Thread(target = self.start_alarm, args = (self.time_str, day)).start()
+            self.alarm_(day)
         
         else:
             print(f'The alarm is off: {self.time_str} on {", ".join(self.days_on)}')
@@ -100,6 +100,9 @@ class AlarmsFrame(ttk.Frame):
                 else:
                     print('Sound on is over')
                     break
+    
+    def alarm_(self, day):
+        Thread(target = self.start_alarm, args = (self.time_str, day), daemon = True).start()
 
 
 class DayButton(ttk.Label):
