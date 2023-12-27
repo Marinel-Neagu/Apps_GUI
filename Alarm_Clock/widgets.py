@@ -2,6 +2,7 @@ from frame_alarm import AlarmsFrame
 from ttkbootstrap.scrolled import ScrolledFrame
 import ttkbootstrap as ttk
 import time
+import threading
 
 
 class ClockFrame(ttk.Frame):
@@ -15,6 +16,10 @@ class ClockFrame(ttk.Frame):
         # set data
         self.time_string = ttk.StringVar()
         self.date_string = ttk.StringVar()
+        
+        # start the clock
+        
+        self.update_time()
         
         # set set style
         self.style = ttk.Style()
@@ -58,9 +63,6 @@ class ClockFrame(ttk.Frame):
                 columnspan = 2,
                 sticky = 'n'
                 )
-        
-        # logic
-        self.update_time()
     
     def update_time(self):
         # set time and date format

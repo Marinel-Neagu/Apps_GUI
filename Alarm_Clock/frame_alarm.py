@@ -1,7 +1,8 @@
 import ttkbootstrap as ttk
 import pygame
-import time
+from time import sleep
 import datetime
+from threading import Thread
 
 
 class AlarmsFrame(ttk.Frame):
@@ -45,7 +46,7 @@ class AlarmsFrame(ttk.Frame):
         self.delete_button.grid(row = 0, column = 6, sticky = 'news')
         
         # add the layer of day
-        list_day = ('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat')
+        list_day = ('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat',)
         
         for index, day in enumerate(list_day):
             self.day_label[index] = DayButton(
@@ -63,7 +64,7 @@ class AlarmsFrame(ttk.Frame):
         if self.variable_checkbutton.get():
             
             print(f'The alarm is set at: {self.time_str} on {day}')
-            self.start_alarm(hour = self.time_str, day = day)
+            Thread(target = self.start_alarm, args = (self.time_str, day)).start()
         
         else:
             print(f'The alarm is off: {self.time_str} on {", ".join(self.days_on)}')
@@ -78,15 +79,27 @@ class AlarmsFrame(ttk.Frame):
             if not self.day_label[i].state.get():
                 self.days_on.append(self.day_label[i]['text'])
     
-    def start_alarm(self, hour, day):
+    def start_alarm(self, time, day):
+        hour = time.split(':')[0]
+        minutes = time.split(':')[1]
         
-        alarm_selected = f'{day} {hour}'
-        alarm_time = datetime.datetime.now().strftime('%a %H:%M')
+        day_selected = day
+        today = datetime.datetime.now().strftime('%a')
+        print(today)
         
-        if alarm_selected == alarm_time:
-            print('The alarm is clocking!')
-        else:
-            print('The alarm is bad!')
+        total_second = 3600 * int(hour) + 60 * int(minutes)
+        counter = 0
+        
+        if day_selected == today:
+            print('alarm is clocking')
+            while True:
+                if counter <= total_second:
+                    sleep(1)
+                    counter += 1
+                    print('Tic Tac:', counter)
+                else:
+                    print('Sound on is over')
+                    break
 
 
 class DayButton(ttk.Label):
