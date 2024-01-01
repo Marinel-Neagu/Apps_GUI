@@ -62,3 +62,5 @@ MCLOCK/.idea/sonarlint/issuestore/b/0/b0bb0a26d88d16d2e82502fe47e034e248a527a2,
 WCLOCK/.idea/sonarlint/securityhotspotstore/b/0/b0bb0a26d88d16d2e82502fe47e034e248a527a2,4/d/4d8794c4b46f660a6529ebd35f3b7d50392199ac
 @
 CLOCK/widgets.py,b/a/ba819c0cbc05eca32beb203542d934f656d86773
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
