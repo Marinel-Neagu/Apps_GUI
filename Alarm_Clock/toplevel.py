@@ -12,7 +12,6 @@ class TopLevel(tk.Toplevel):
         self.title('Clock')
         self.set_geometry(width = 300, height = 300)
         
-        
         # set data
         self.hour_int = hour_int
         self.minute_int = minute_int
@@ -100,4 +99,4 @@ class TopLevel(tk.Toplevel):
     def set_geometry(self, width, height):
         top = int(self.winfo_screenheight() / 2) - int(height / 2)
         left = int(self.winfo_screenwidth() / 2) - int(width / 2)
-        self.geometry(f'{width}x{height}+{left}+{top}')
+        self.geometry(f'{height}x{width}+{left}+{top}')

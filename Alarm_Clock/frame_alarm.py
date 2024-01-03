@@ -1,33 +1,15 @@
+import threading
+
 import ttkbootstrap as ttk
 from sys import exit
 import pygame
-from time import sleep
-import datetime
+import time
+from datetime import datetime
 from threading import Thread, Event
 
 
-def config_alarm(time, day, event):
-    hour = time.split(':')[0]
-    minutes = time.split(':')[1]
-    
-    day_selected = day
-    # today = datetime.datetime.now().strftime('%a')  TODO: need to make something
-    total_second = 3600 * int(hour) + 60 * int(minutes)
-    counter = 0
-    
-    if day_selected == 'Wed':
-        print('alarm is clocking')
-        while True:
-            if not event.is_set():
-                if counter <= total_second:
-                    sleep(1)
-                    counter += 1
-                    print('Tic Tac:', counter)
-                else:
-                    print('Sound on is over')
-            else:
-                print('sorry is done')
-                break
+def alarm_configuration(clock, day, event):
+    print(int(time.time()))
 
 
 class AlarmsFrame(ttk.Frame):
@@ -35,7 +17,6 @@ class AlarmsFrame(ttk.Frame):
         super().__init__(master = parent, )
         
         # set grid layout
-        
         self.rowconfigure((0, 1), weight = 1, uniform = 'a')
         self.columnconfigure(list(range(0, 7)), weight = 1, uniform = 'a')
         
@@ -45,6 +26,8 @@ class AlarmsFrame(ttk.Frame):
         self.days_on = list()
         self.time_str = text
         self.variable_checkbutton = ttk.BooleanVar()
+        
+        self.event = Event()
         
         # set widgets
         
@@ -85,19 +68,18 @@ class AlarmsFrame(ttk.Frame):
         
         self.select_days()
         day = ", ".join(self.days_on)
-        event = Event()
-        alarm_test = Thread(target = config_alarm, args = (self.time_str, day, event), daemon = True)
-        alarm_test.start()
+        alarm_test = Thread(target = alarm_configuration, args = (self.time_str, day, self.event), daemon = True)
         
         if self.variable_checkbutton.get():
+            self.event.clear()
+            alarm_test.start()
             print(f'The alarm is set at: {self.time_str} on {day}')
-        
         else:
+            self.event.set()
             print(f'The alarm is off: {self.time_str} on {", ".join(self.days_on)}')
-            event.set()
     
     def delete_alarm(self):
-        self.destroy()
+        print(threading.active_count())
     
     def select_days(self):
         

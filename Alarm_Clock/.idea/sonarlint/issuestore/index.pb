@@ -18,3 +18,9 @@ S
 -.idea/sonarlint/securityhotspotstore/index.pb,8/8/88a9255124c95bdc913197c120a8d560edc59c8e
 7
 test.py,a/3/a36e355ddb203d7d4133221f339dc406cb9f480f
+@
+configuration.py,e/7/e7a71d767cea31efc8699be646ee073611f9426c
+<
+test_main.py,a/2/a23e969147c8e853b488dfad75ef624cc9831522
+=
+timemodule.py,9/6/963976c8e444caaa0ba5d4eb2b2a01b67cb6bbfc
