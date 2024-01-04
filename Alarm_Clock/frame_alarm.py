@@ -8,28 +8,31 @@ import datetime
 from threading import Thread, Event
 
 
-def alarm_configuration(clock, day, event):
+def alarm_configuration(clock, days, event):
+    
     date = clock.split(':')
     hour = date[0]
     minutes = date[1]
     total_time = 3600 * int(hour) + 60 * int(minutes)
+    
     while True:
-        if event.is_set():
-            break
-        else:
-            initial_day = time.strftime('%a')
-            time_now = datetime.datetime.now()
-            initial_hour = time_now.hour
-            initial_minutes = time_now.minute
-            initial_second = time_now.second
-            initial_total_time = 3600 * initial_hour + 60 * initial_minutes + initial_second
-            print('is ok')
-            if day == initial_day and initial_total_time <= total_time:
-                
-                print(f'{initial_hour}:{initial_minutes}:{time_now.second}')
-                time.sleep(1)
+        initial_day = time.strftime('%a')
+        for day in days:
+            if day != initial_day and event.is_set():
+                break
             else:
-                print('The alarm is off now')
+                time_now = datetime.datetime.now()
+                initial_hour = time_now.hour
+                initial_minutes = time_now.minute
+                initial_second = time_now.second
+                initial_total_time = 3600 * initial_hour + 60 * initial_minutes + initial_second
+                
+                if initial_total_time <= total_time:
+                    time.sleep(1)
+                    print(f'{initial_hour}:{initial_minutes}:{time_now.second}')
+                else:
+                    print('DONE')
+                    break
 
 
 class AlarmsFrame(ttk.Frame):
@@ -37,7 +40,7 @@ class AlarmsFrame(ttk.Frame):
         super().__init__(master = parent, )
         
         # set grid layout
-        self.event =Event()
+        self.event = Event()
         self.rowconfigure((0, 1), weight = 1, uniform = 'a')
         self.columnconfigure(list(range(0, 7)), weight = 1, uniform = 'a')
         
@@ -87,7 +90,6 @@ class AlarmsFrame(ttk.Frame):
         
         self.select_days()
         day = ", ".join(self.days_on)
-        self.event = Event()
         alarm_test = Thread(target = alarm_configuration, args = (self.time_str, day, self.event), daemon = True)
         
         if self.variable_checkbutton.get():
