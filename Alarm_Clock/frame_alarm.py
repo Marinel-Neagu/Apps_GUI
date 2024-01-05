@@ -9,30 +9,37 @@ from threading import Thread, Event
 
 
 def alarm_configuration(clock, days, event):
-    
+    time.sleep(1)
+    for day in days:
+        print(day, end = ',')
+
+
+def alarm_1(clock, days, event):
     date = clock.split(':')
     hour = date[0]
     minutes = date[1]
     total_time = 3600 * int(hour) + 60 * int(minutes)
     
     while True:
-        initial_day = time.strftime('%a')
-        for day in days:
-            if day != initial_day and event.is_set():
-                break
-            else:
-                time_now = datetime.datetime.now()
-                initial_hour = time_now.hour
-                initial_minutes = time_now.minute
-                initial_second = time_now.second
-                initial_total_time = 3600 * initial_hour + 60 * initial_minutes + initial_second
-                
-                if initial_total_time <= total_time:
-                    time.sleep(1)
-                    print(f'{initial_hour}:{initial_minutes}:{time_now.second}')
-                else:
-                    print('DONE')
-                    break
+        if event.is_set():
+            break
+        else:
+            initial_day = time.strftime('%a')
+            for day in days:
+                if day == initial_day:
+                    days.remove(day)
+                    time_now = datetime.datetime.now()
+                    initial_hour = time_now.hour
+                    initial_minutes = time_now.minute
+                    initial_second = time_now.second
+                    initial_total_time = 3600 * initial_hour + 60 * initial_minutes + initial_second
+                    
+                    if initial_total_time <= total_time:
+                        time.sleep(1)
+                        print(f'{initial_hour}:{initial_minutes}:{time_now.second}')
+                    else:
+                        print('DONE')
+                        break
 
 
 class AlarmsFrame(ttk.Frame):
@@ -89,13 +96,16 @@ class AlarmsFrame(ttk.Frame):
     def set_alarm(self):
         
         self.select_days()
-        day = ", ".join(self.days_on)
-        alarm_test = Thread(target = alarm_configuration, args = (self.time_str, day, self.event), daemon = True)
+        alarm_test = Thread(
+                target = alarm_configuration,
+                args = (self.time_str, self.days_on, self.event),
+                daemon = True
+                )
         
         if self.variable_checkbutton.get():
             self.event.clear()
             alarm_test.start()
-            print(f'The alarm is set at: {self.time_str} on {day}')
+            print(f'The alarm is set at: {self.time_str} on {self.days_on}')
         else:
             self.event.set()
             print(f'The alarm is off: {self.time_str} on {", ".join(self.days_on)}')
