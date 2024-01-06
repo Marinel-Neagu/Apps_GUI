@@ -1,45 +1,44 @@
-import threading
-
-import ttkbootstrap as ttk
 from sys import exit
-import pygame
-import time
-import datetime
 from threading import Thread, Event
+import datetime
+import pygame
+import threading
+import time
+import ttkbootstrap as ttk
 
 
-def alarm_configuration(clock, days, event):
-    time.sleep(1)
-    for day in days:
-        print(day, end = ',')
-
-
-def alarm_1(clock, days, event):
+def alarm_configuration(clock):
     date = clock.split(':')
     hour = date[0]
     minutes = date[1]
     total_time = 3600 * int(hour) + 60 * int(minutes)
-    
-    while True:
-        if event.is_set():
+
+
+def check_day(days, event):
+    while not event.is_set():
+        if len(days) == 0:
             break
         else:
             initial_day = time.strftime('%a')
             for day in days:
                 if day == initial_day:
                     days.remove(day)
-                    time_now = datetime.datetime.now()
-                    initial_hour = time_now.hour
-                    initial_minutes = time_now.minute
-                    initial_second = time_now.second
-                    initial_total_time = 3600 * initial_hour + 60 * initial_minutes + initial_second
-                    
-                    if initial_total_time <= total_time:
-                        time.sleep(1)
-                        print(f'{initial_hour}:{initial_minutes}:{time_now.second}')
-                    else:
-                        print('DONE')
-                        break
+
+
+def counter_timer(event):
+    while not event.is_set():
+        time_now = datetime.datetime.now()
+        initial_hour = time_now.hour
+        initial_minutes = time_now.minute
+        initial_second = time_now.second
+        initial_total_time = 3600 * initial_hour + 60 * initial_minutes + initial_second
+    if initial_total_time <= total_time:
+        time.sleep(1)
+        print(f'{initial_hour}:{initial_minutes}:{time_now.second}')
+    else:
+        print('it working i guess')
+        time.sleep(60)
+        alarm_configuration(clock, days, event)
 
 
 class AlarmsFrame(ttk.Frame):
