@@ -5,40 +5,11 @@ import pygame
 import threading
 import time
 import ttkbootstrap as ttk
+from backend_alarm import AlarmClock
 
 
-def alarm_configuration(clock):
-    date = clock.split(':')
-    hour = date[0]
-    minutes = date[1]
-    total_time = 3600 * int(hour) + 60 * int(minutes)
-
-
-def check_day(days, event):
-    while not event.is_set():
-        if len(days) == 0:
-            break
-        else:
-            initial_day = time.strftime('%a')
-            for day in days:
-                if day == initial_day:
-                    days.remove(day)
-
-
-def counter_timer(event):
-    while not event.is_set():
-        time_now = datetime.datetime.now()
-        initial_hour = time_now.hour
-        initial_minutes = time_now.minute
-        initial_second = time_now.second
-        initial_total_time = 3600 * initial_hour + 60 * initial_minutes + initial_second
-    if initial_total_time <= total_time:
-        time.sleep(1)
-        print(f'{initial_hour}:{initial_minutes}:{time_now.second}')
-    else:
-        print('it working i guess')
-        time.sleep(60)
-        alarm_configuration(clock, days, event)
+def start_alarm(clock, event, days):
+    AlarmClock(clock = clock, event = event, days = days).start_alarm()
 
 
 class AlarmsFrame(ttk.Frame):
@@ -96,8 +67,8 @@ class AlarmsFrame(ttk.Frame):
         
         self.select_days()
         alarm_test = Thread(
-                target = alarm_configuration,
-                args = (self.time_str, self.days_on, self.event),
+                target = start_alarm,
+                args = (self.time_str, self.event, self.days_on),
                 daemon = True
                 )
         
